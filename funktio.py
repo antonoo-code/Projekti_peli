@@ -16,7 +16,7 @@ conn = mysql.connector.connect(
 
 # FUNCTIONS
 
-# select 30 airports for the game
+# valitaan euroopan lentokentät jotka ovat large ja small airport
 def get_airports():
     sql = """SELECT iso_country, ident, name, type, latitude_deg, longitude_deg
 FROM airport
