@@ -21,7 +21,7 @@ def get_airports():
     sql = """SELECT iso_country, ident, name, type, latitude_deg, longitude_deg
 FROM airport
 WHERE continent = 'EU' 
-AND type='large_airport'
+AND type='large_airport' , 'small-airport'
 ORDER by RAND()
 LIMIT 30;"""
     cursor = conn.cursor(dictionary=True)
