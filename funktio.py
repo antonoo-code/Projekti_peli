@@ -9,6 +9,17 @@ connection = mysql.connector.connect(
     password='Rekolammas123',
     autocommit=True)
 
+def airports():
+    sql = ("SELECT iso_country, ident, name, type, latitude_deg, longitude_deg FROM airport WHERE continent = 'EU' AND type = 'large_airport' limit 20;")
+    cursor = connection.cursor(dictionary = True)
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    return result
+
+print(f'{airports()}')
+
+
+
 
 
 
