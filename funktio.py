@@ -1,5 +1,5 @@
 import random
-import story
+import tarina
 from geopy import distance
 
 import mysql.connector
@@ -18,12 +18,11 @@ conn = mysql.connector.connect(
 
 # valitaan euroopan lentokentät jotka ovat large ja small airport
 def get_airports():
-    sql = """SELECT iso_country, ident, name, type, latitude_deg, longitude_deg
-FROM airport
-WHERE continent = 'EU' 
-AND type='large_airport' , 'small-airport'
-ORDER by RAND()
-LIMIT 30;"""
+    sql = "SELECT iso_country, ident, name, type, latitude_deg, longitude_deg
+    FROM airport
+    WHERE continent = 'EU'
+    AND type='large_airport' , 'small_airport'
+    ;"
     cursor = conn.cursor(dictionary=True)
     cursor.execute(sql)
     result = cursor.fetchall()
