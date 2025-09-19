@@ -9,7 +9,7 @@ connection = mysql.connector.connect(
     password='Rekolammas123',
     autocommit=True)
 
-
+def
 
 
 
