@@ -29,8 +29,13 @@ print(goal_airport)
 print(f'{airports()}')
 
 
+def airport_data(icao):
+    sql = ("SELECT iso_country, ident, name, latitude_deg, longitude_deg FROM airport WHERE ident = %s")
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute(sql, (icao,))
+    result = cursor.fetchone()
+    return result
 
-
-
+print(f'{airport_data(goal_airport)}')
 
 
