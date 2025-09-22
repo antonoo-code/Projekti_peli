@@ -8,7 +8,8 @@ connection = mysql.connector.connect(
     database = 'projektipeli', 
     user='projekti',
     password='sala',
-    autocommit=True)
+    autocommit=True
+)
 
 def airports():
     sql = ("SELECT iso_country, ident, name, type, latitude_deg, longitude_deg FROM airport WHERE continent = 'EU' AND type = 'large_airport' limit 20;")
@@ -29,9 +30,20 @@ print(goal_airport)
 print(f'{airports()}')
 
 
+def airport_data(icao):
+    sql = ("SELECT iso_country, ident, name, latitude_deg, longitude_deg FROM airport WHERE ident = %s")
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute(sql, (icao,))
+    result = cursor.fetchone()
+    return result
 
 
+def update_location(icao, p_range): #lokaation muutos pelissä
+    sql = ("UPDATE game SET location = %s, player_range = %s")
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute(sql, (icao, p_range)
 
+print(f'{airport_data(goal_airport)}')
 
 
 
