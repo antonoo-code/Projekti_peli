@@ -29,7 +29,7 @@ def airports():
 def npc_airport_range_calc(Airport_funktio, npc_location):
     in_range = []
     for Airport_funktio in Airport_funktio:
-        range = distance_calc(icao, Airport_funktio['ident'])
+        range = calculate_distance(icao, Airport_funktio['ident'])
         if range <= npc_location and not range == 0:
             in_range.append(Airport_funktio)
         return range
@@ -56,7 +56,6 @@ def airports_in_range(icao, a_ports, p_range):
 """
 
 
-print(f'Lentokenttien etäisyys on : {airport_distance_calc(Code_input1, Code_input2)} kilometriä.')
 
 #Lentokenttien etäisyys laskuri 
 
