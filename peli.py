@@ -86,12 +86,14 @@ def print_player_in_range_ports(in_range_ports): #lentokentät rangella printti
 
 
 current_airport = start_airport
-pelaaja_vuorot = 0
-npc_vuorot = 0
+player_turns = 0
+npc_turns = 0
+
+
 game_running = True
 while game_running:
-    pelaaja_vuorot = pelaaja_vuorot + 1
-    npc_vuorot = npc_vuorot + 1
+    player_turns = player_turns + 1
+    npc_turns = npc_turns + 1
     # get current airport info
     airport = airport_data(current_airport)
 
