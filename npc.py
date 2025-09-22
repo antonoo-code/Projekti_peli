@@ -9,19 +9,52 @@ connection = mysql.connector.connect(
     password='sala',
     autocommit=True)
 
-def airport_distance_calc(code1, code2):
-    airport_cordi1 = (f'SELECT latitude_deg, longitude_deg  FROM airport WHERE ident = "{code1}"')
-    cursor = connection.cursor()
-    cursor.execute(airport_cordi1)
-    port_cordi1 = cursor.fetchall()
-    
-    airport_cordi2 = (f'SELECT latitude_deg, longitude_deg  FROM airport WHERE ident = "{code2}"')
+""""def npc_airport_data(icao):
+    sql = f'''SELECT iso_country, ident, name, latitude_deg, longitude_deg
+                  FROM airport
+                  WHERE ident = %s'''
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute(sql, (icao,))
+    result = cursor.fetchone()
+    return result"""
+
+def airports():
+    sql = ("SELECT iso_country, ident, name, type, latitude_deg, longitude_deg FROM airport WHERE continent = 'EU' AND type = 'large_airport' limit 20;")
+    cursor = connection.cursor(dictionary = True)
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    return result
+
+
+def npc_airport_range_calc(Airport_funktio, npc_location):
+    in_range = []
+    for Airport_funktio in Airport_funktio:
+        range = distance_calc(icao, Airport_funktio['ident'])
+        if range <= npc_location and not range == 0:
+            in_range.append(Airport_funktio)
+        return range
+
+
+
+
     cursor = connection.cursor()
     cursor.execute(airport_cordi2)
     port_cordi2 = cursor.fetchall()
 
     final_distance = distance.distance(port_cordi1, port_cordi2).kilometers
     return final_distance
+
+#esimerkki funktio
+"""
+def airports_in_range(icao, a_ports, p_range):
+    in_range = []
+    for a_port in a_ports:
+        dist = calculate_distance(icao, a_port['ident'])
+        if dist <= p_range and not dist == 0:
+            in_range.append(a_port)
+    return in_range
+"""
+
 
 print(f'Lentokenttien etäisyys on : {airport_distance_calc(Code_input1, Code_input2)} kilometriä.')
 
