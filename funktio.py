@@ -1,5 +1,6 @@
 from geopy import distance
 import mysql.connector
+import random
 
 connection = mysql.connector.connect(
     port=3306, #oletusarvo ei pakollinen.
@@ -16,6 +17,15 @@ def airports():
     result = cursor.fetchall()
     return result
 
+#tehdään random maali ja aloituspiste
+all_airports = airports()
+goal_num = random.randint(0,len(all_airports)-1)
+start_num = random.randint(0,len(all_airports)-1)
+goal_airport = all_airports[goal_num]['ident']
+start_airport = all_airports[start_num]['ident']
+
+print(start_airport)
+print(goal_airport)
 print(f'{airports()}')
 
 
