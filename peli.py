@@ -11,20 +11,21 @@ connection = mysql.connector.connect(
     autocommit=True)
 
 
-def airports():
+def airports(): #haetaan lentokentät mitä käytetään
     sql = ("SELECT iso_country, ident, name, type, latitude_deg, longitude_deg FROM airport WHERE continent = 'EU' AND type = 'large_airport' limit 20;")
     cursor = connection.cursor(dictionary = True)
     cursor.execute(sql)
     result = cursor.fetchall()
     return result
+selected_ports = airports()
 
+all_airports = airports()
+goal_num = random.randint(0,len(all_airports)-1)
+start_num = random.randint(0,len(all_airports)-1)
+goal_airport = all_airports[goal_num]['ident']
+start_airport = all_airports[start_num]['ident']
 
-
-def distance_from_airport_distance(x):
-    return x[1]
-
-
-def get_npc_flight_options(in_range_ports, goal):  #kun kutsuu niin goal_airport parametriksi goal kohdalle.
+def npc_connective_flight(in_range_ports, goal):  #kun kutsuu niin goal_airport parametriksi goal kohdalle.
     airport_distances = []
     for airport in in_range_ports:
         range = calculate_distance(airport[0], goal)   # EDDM on maalin ident
@@ -52,7 +53,6 @@ def update_location(icao, p_range): #lokaation muutos pelissä
     cursor = conn.cursor(dictionary=True)
     cursor.execute(sql, (icao, p_range))
 
-
 def player_airport_range_calc(icao, airport_list, player_range):
     in_range = []
     for airport in airport_list:
@@ -62,7 +62,7 @@ def player_airport_range_calc(icao, airport_list, player_range):
     return in_range
 
 
-def npc_airport_range_calc(npc_icao, airport_list, npc_range):
+def npc_airport_range_calc(npc_icao, airport_list, npc_range): #lentokentät npc:n rangella
     in_range = []
     for airport in airport_list:
         range = calculate_distance(npc_icao, airport['ident'])
@@ -70,18 +70,18 @@ def npc_airport_range_calc(npc_icao, airport_list, npc_range):
             in_range.append([airport['ident'], int(range)])
     return in_range
 
-def throw_dice():
+def throw_dice(): #noppa
     throw_dice = random.randint(1, 6)
     print(throw_dice)
 
-def airport_data(icao):
+def airport_data(icao): #lentokentän tiedot
     sql = ("SELECT iso_country, ident, name, latitude_deg, longitude_deg FROM airport WHERE ident = %s")
     cursor = connection.cursor(dictionary=True)
     cursor.execute(sql, (icao,))
     result = cursor.fetchone()
     return result
 
-def print_player_in_range_ports(in_range_ports):
+def print_player_in_range_ports(in_range_ports): #lentokentät rangella printti
     print_content = []
     for airport in in_range_ports:
         port_name = airport_data(airport[0])['name']
@@ -99,9 +99,15 @@ goal_airport = all_airports[goal_num]['ident']
 start_airport = all_airports[start_num]['ident']
 
 current_airport = start_airport
-
+end_airport = airport_data(goal_airport)
+player_turns = 0
+npc_turns = 0
+player_range = 600
+print(f'Määränpääsi {end_airport['name']} ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä')
 game_running = True
 while game_running:
+    player_turns = player_turns + 1
+    npc_turns = npc_turns + 1
     # get current airport info
     airport = airport_data(current_airport)
 
@@ -111,7 +117,7 @@ while game_running:
     # kysytään haluuako ladata, heittää noppaa tai lentää.
     do = input('haluatko ladata (lataa), heittää noppaa(heita) tai lentää(lenna)')
     if do == 'lataa':
-        print('')#Elif ei toiminu koska iffillä ei ollut mitää tekemistä.
+        #lisaa rangea
     elif do == 'heita':
         #anna muuttujat mitä nopan silmäluvuilla tulee
         print(f'heitit silmäluvun {throw_dice()}')
