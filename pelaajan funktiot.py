@@ -1,3 +1,4 @@
+import random
 
 # Etäisyys kentästä toiseen
 
@@ -33,6 +34,19 @@ selected_distance = calculate_distance(current_airport, destination)
 player_range = selected_distance
 update_location(destination, player_range, game_id)
 current_airport = destination
+
+# Noppafunktio
+
+def throw_dice():
+    throw_dice = random.randint(1, 6)
+    print(throw_dice)
+
+throw_dice()
+
+# Nicke
+
+
+
 
 
 
