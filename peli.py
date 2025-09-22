@@ -12,11 +12,12 @@ while game_running:
     # kysytään haluuako ladata, heittää noppaa tai lentää.
     do = input('haluatko ladata (lataa), heittää noppaa(heita) tai lentää(lenna)')
     if do == 'lataa':
-
+        #lisaa rangea
     elif do == 'heita':
-        throw_dice()
+        #anna muuttujat mitä nopan silmäluvuilla tulee
+        print(f'heitit silmäluvun {throw_dice()}')
     elif do == 'lenna':
-        # todo anna lento vaihtoehdot
+        # anna lento vaihtoehdot
         destination = input('Enter destination icao: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
         selected_distance = calculate_distance(current_airport, destination)
         player_range -= selected_distance
