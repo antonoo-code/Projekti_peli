@@ -17,23 +17,28 @@ def airports():
     cursor.execute(sql)
     result = cursor.fetchall()
     return result
-selected_ports = airports()
 
-all_airports = airports()
-goal_num = random.randint(0,len(all_airports)-1)
-start_num = random.randint(0,len(all_airports)-1)
-goal_airport = all_airports[goal_num]['ident']
-start_airport = all_airports[start_num]['ident']
 
-def npc_connective_flight(in_range_ports, goal):  #kun kutsuu niin goal_airport parametriksi goal kohdalle.
+
+def distance_from_airport_distance(x):
+    return x[1]
+
+
+def get_npc_flight_options(in_range_ports, goal):  #kun kutsuu niin goal_airport parametriksi goal kohdalle.
     airport_distances = []
     for airport in in_range_ports:
         range = calculate_distance(airport[0], goal)   # EDDM on maalin ident
         if range != 0:
             total_distance = airport[1]+ int(range)
             airport_distances.append([airport[0], total_distance]) # airport[1]+range on matka maaliin lähtöpisteestä.
-    airports_with_shortest_distance = sorted(airport_distances, key=lambda x: x[1])[:3]
+    airports_with_shortest_distance = sorted(airport_distances, key=distance_from_airport_distance)[:3]
     return airports_with_shortest_distance    
+
+
+def get_npc_destination_icao(npc_flight_options):
+    """Tää funktio palauttaa npc-pelaajan lehtovaihtoehdoista satunnaisesti yhden kentän icao-koodin"""
+    random_index =random.randint(0,len(npc_flight_options)-1)
+    return npc_flight_options[random_index][0]
 
 
 def calculate_distance(current, target):
@@ -46,6 +51,7 @@ def update_location(icao, p_range): #lokaation muutos pelissä
     sql = ("UPDATE game SET location = %s, player_range = %s")
     cursor = conn.cursor(dictionary=True)
     cursor.execute(sql, (icao, p_range))
+
 
 def player_airport_range_calc(icao, airport_list, player_range):
     in_range = []
@@ -83,6 +89,15 @@ def print_player_in_range_ports(in_range_ports):
     print(print_content)
 
 
+
+
+
+all_airports = airports()
+goal_num = random.randint(0,len(all_airports)-1)
+start_num = random.randint(0,len(all_airports)-1)
+goal_airport = all_airports[goal_num]['ident']
+start_airport = all_airports[start_num]['ident']
+
 current_airport = start_airport
 
 game_running = True
@@ -96,7 +111,7 @@ while game_running:
     # kysytään haluuako ladata, heittää noppaa tai lentää.
     do = input('haluatko ladata (lataa), heittää noppaa(heita) tai lentää(lenna)')
     if do == 'lataa':
-        #lisaa rangea
+        print('')#Elif ei toiminu koska iffillä ei ollut mitää tekemistä.
     elif do == 'heita':
         #anna muuttujat mitä nopan silmäluvuilla tulee
         print(f'heitit silmäluvun {throw_dice()}')

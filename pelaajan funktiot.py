@@ -1,4 +1,3 @@
-import random
 
 # Etäisyys kentästä toiseen
 
@@ -14,7 +13,7 @@ def calculate_distance(current, target):
     start = get_airport_info(current)
     end = get_airport_info(target)
     return distance.distance(start['latitude_deg'], start['longitude_deg']),
-(end['latitude_deg'], end['longitude_deg'])).km
+(end['latitude_deg'], end['longitude_deg']).km
 
 airports = airports_in_range(current_airport, all_airports, player_range)
 print(f"Voit lentää seuraaville lentokentille: {len(airports)}")
@@ -34,19 +33,6 @@ selected_distance = calculate_distance(current_airport, destination)
 player_range = selected_distance
 update_location(destination, player_range, game_id)
 current_airport = destination
-
-# Noppafunktio
-
-def throw_dice():
-    throw_dice = random.randint(1, 6)
-    print(throw_dice)
-
-throw_dice()
-
-# Nicke
-
-
-
 
 
 

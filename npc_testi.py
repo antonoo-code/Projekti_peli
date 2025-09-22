@@ -49,22 +49,28 @@ def print_npc_in_range_ports(in_range_ports):
     for airport in in_range_ports:
         port_name = airport_data(airport[0])['name']
         print_content.append(f'Lentokentän koodi: {airport[0]}, Lentokentän nimi: {port_name}, Lentokentälle on {airport[1]} kilometriä matkaa.')
-    print(print_content)
+    
 
 
+def distance_from_airport_distance(x):
+    return x[1]
 
 
-
-def npc_connective_flight(in_range_ports, goal):
+def get_npc_connective_flight_options(in_range_ports):  #kun kutsuu niin goal_airport parametriksi goal kohdalle.
     airport_distances = []
     for airport in in_range_ports:
-        range = calculate_distance(airport[0], goal)   # EDDM on maalin ident
+        range = calculate_distance(airport[0], 'EDDM')   # EDDM on maalin ident
         if range != 0:
             total_distance = airport[1]+ int(range)
             airport_distances.append([airport[0], total_distance]) # airport[1]+range on matka maaliin lähtöpisteestä.
-    airports_with_shortest_distance = sorted(airport_distances, key=lambda x: x[1])[:3]
-    return airports_with_shortest_distance        
+    airports_with_shortest_distance = sorted(airport_distances, key=distance_from_airport_distance)[:3]
+    return airports_with_shortest_distance          
 
+def get_npc_connective_flight(npc_flight_options):
+    """Tää funktio palauttaa npc-pelaajan lehtovaihtoehdoista satunnaisesti yhden kentän icao-koodin"""
+    random_index =random.randint(0,len(npc_flight_options)-1)
+    return npc_flight_options[random_index][0]
+    
 
 
 #while- luppi järjestys 
@@ -82,8 +88,10 @@ selected_ports = airports()
 
 first_flight_list = npc_airport_range_calc('ESSA' , selected_ports, 1500 )
 
-print_npc_in_range_ports(first_flight_list)
+npc_options = get_npc_connective_flight_options(first_flight_list)
+print(npc_options)
 
 
 
-print(npc_connective_flight(first_flight_list))
+
+npc_next_destination_icao = get_npc_connective_flight(npc_options)
