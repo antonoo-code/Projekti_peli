@@ -9,14 +9,14 @@ connection = mysql.connector.connect(
     password='sala',
     autocommit=True)
 
-def npc_airport_data(icao):
+""""def npc_airport_data(icao):
     sql = f'''SELECT iso_country, ident, name, latitude_deg, longitude_deg
                   FROM airport
                   WHERE ident = %s'''
     cursor = conn.cursor(dictionary=True)
     cursor.execute(sql, (icao,))
     result = cursor.fetchone()
-    return result
+    return result"""
 
 def airports():
     sql = ("SELECT iso_country, ident, name, type, latitude_deg, longitude_deg FROM airport WHERE continent = 'EU' AND type = 'large_airport' limit 20;")
