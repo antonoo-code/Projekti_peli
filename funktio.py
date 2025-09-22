@@ -8,7 +8,8 @@ connection = mysql.connector.connect(
     database = 'projektipeli', 
     user='projekti',
     password='sala',
-    autocommit=True)
+    autocommit=True
+)
 
 def airports():
     sql = ("SELECT iso_country, ident, name, type, latitude_deg, longitude_deg FROM airport WHERE continent = 'EU' AND type = 'large_airport' limit 20;")
