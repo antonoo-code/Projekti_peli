@@ -86,10 +86,11 @@ def print_player_in_range_ports(in_range_ports): #lentokentät rangella printti
 
 
 current_airport = start_airport
+end_airport = airport_data(goal_airport)
 player_turns = 0
 npc_turns = 0
-
-
+player_range = 600
+print(f'Määränpääsi {end_airport['name']} ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä')
 game_running = True
 while game_running:
     player_turns = player_turns + 1
@@ -99,11 +100,11 @@ while game_running:
 
     # todo kerrotaan kuinka lähellä on maalia ja kuinka lähellä npc on
     print(f'Olet nyt lentokentällä:  {airport['name']}.')
-    print(f'sinulla on {player_range:.0f}kilometriä rangea.')
+    print(f'sinulla on {player_range:.0f} kilometriä rangea.')
     # kysytään haluuako ladata, heittää noppaa tai lentää laitoin while nii ei tuu väärää kometoa
     do_run = True
     while do_run:
-        do = input('haluatko ladata (lataa), heittää noppaa(heita) tai lentää(lenna)')
+        do = input('haluatko ladata (lataa), heittää noppaa(heita) tai lentää(lenna): ')
         if do == 'lataa':
             print('latasit akun täyteen')
             player_range = 600
