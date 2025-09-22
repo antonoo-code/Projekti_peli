@@ -9,6 +9,10 @@ connection = mysql.connector.connect(
     user='projekti',
     password='sala',
     autocommit=True)
+
+
+
+
 def airports():
     sql = ("SELECT iso_country, ident, name, type, latitude_deg, longitude_deg FROM airport WHERE continent = 'EU' AND type = 'large_airport' limit 20;")
     cursor = connection.cursor(dictionary = True)
@@ -16,6 +20,7 @@ def airports():
     result = cursor.fetchall()
     return result
 selected_ports = airports()
+
 
 def airport_data(icao):
     sql = ("SELECT iso_country, ident, name, latitude_deg, longitude_deg FROM airport WHERE ident = %s")
@@ -27,15 +32,61 @@ def airport_data(icao):
 def calculate_distance(current, target):
     start = airport_data(current)
     end = airport_data(target)
-    return distance.distance(start['latitude_deg'], start['longitude_deg']), (end['latitude_deg'], end['longitude_deg']).km
+    return distance.distance([start['latitude_deg'], start['longitude_deg']], [end['latitude_deg'], end['longitude_deg']]).kilometers
+    
 
-
-def npc_airport_range_calc(icao, Airport_funktio, npc_range):
+def npc_airport_range_calc(npc_icao, airport_list, npc_range):
     in_range = []
-    for Airport_funktio in Airport_funktio:
-        range = calculate_distance(icao, Airport_funktio['ident'])
-        if range <= npc_range and not range == 0:
-            in_range.append(Airport_funktio)
-        return range
+    for airport in airport_list:
+        range = calculate_distance(npc_icao, airport['ident'])
+        if range <= npc_range and range != 0:
+            in_range.append([airport['ident'], int(range)])
+    return in_range
 
-print(f'{npc_airport_range_calc('ESSA' , selected_ports, 1500 )}')
+   #tällä voidaan kutsua mitä tahansa airport_datasta  airport_data(airport[0])['xxx']    
+def print_npc_in_range_ports(in_range_ports):
+    print_content = []
+    for airport in in_range_ports:
+        port_name = airport_data(airport[0])['name']
+        print_content.append(f'Lentokentän koodi: {airport[0]}, Lentokentän nimi: {port_name}, Lentokentälle on {airport[1]} kilometriä matkaa.')
+    print(print_content)
+
+
+
+
+
+def npc_connective_flight(in_range_ports):
+    airport_distances = []
+    for airport in in_range_ports:
+        range = calculate_distance(airport[0], 'EDDM')   # EDDM on maalin ident
+        if range != 0:
+            total_distance = airport[1]+ int(range)
+            airport_distances.append([airport[0], total_distance]) # airport[1]+range on matka maaliin lähtöpisteestä.
+    airports_with_shortest_distance = sorted(airport_distances, key=lambda x: x[1])[:3]
+    return airports_with_shortest_distance        
+
+[3,4]
+lista[1][1]
+[[3,4],
+ [5,6]]
+
+#while- luppi järjestys 
+#nykyinen sijainti
+#in range tyhjänä
+#calc haku
+#in range täytettynä
+#lentokentän valinta
+#nykyinen sijainti
+#in range tyhjänä tyhjennetään in_range= []
+
+
+
+selected_ports = airports()
+
+first_flight_list = npc_airport_range_calc('ESSA' , selected_ports, 1500 )
+
+print_npc_in_range_ports(first_flight_list)
+
+
+
+print(npc_connective_flight(first_flight_list))
