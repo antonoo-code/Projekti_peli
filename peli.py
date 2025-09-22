@@ -11,7 +11,7 @@ connection = mysql.connector.connect(
     autocommit=True)
 
 
-def airports():
+def airports(): #haetaan lentokentät mitä käytetään
     sql = ("SELECT iso_country, ident, name, type, latitude_deg, longitude_deg FROM airport WHERE continent = 'EU' AND type = 'large_airport' limit 20;")
     cursor = connection.cursor(dictionary = True)
     cursor.execute(sql)
@@ -20,6 +20,8 @@ def airports():
 selected_ports = airports()
 
 all_airports = airports()
+
+#otetaan alkupiste ja maali
 goal_num = random.randint(0,len(all_airports)-1)
 start_num = random.randint(0,len(all_airports)-1)
 goal_airport = all_airports[goal_num]['ident']
@@ -47,7 +49,7 @@ def update_location(icao, p_range): #lokaation muutos pelissä
     cursor = conn.cursor(dictionary=True)
     cursor.execute(sql, (icao, p_range))
 
-def player_airport_range_calc(icao, airport_list, player_range):
+def player_airport_range_calc(icao, airport_list, player_range): #lentokentät pelaajan rangella
     in_range = []
     for airport in airport_list:
         range = calculate_distance(icao, airport['ident'])
@@ -56,7 +58,7 @@ def player_airport_range_calc(icao, airport_list, player_range):
     return in_range
 
 
-def npc_airport_range_calc(npc_icao, airport_list, npc_range):
+def npc_airport_range_calc(npc_icao, airport_list, npc_range): #lentokentät npc:n rangella
     in_range = []
     for airport in airport_list:
         range = calculate_distance(npc_icao, airport['ident'])
@@ -64,18 +66,18 @@ def npc_airport_range_calc(npc_icao, airport_list, npc_range):
             in_range.append([airport['ident'], int(range)])
     return in_range
 
-def throw_dice():
+def throw_dice(): #noppa
     throw_dice = random.randint(1, 6)
     print(throw_dice)
 
-def airport_data(icao):
+def airport_data(icao): #lentokentän tiedot
     sql = ("SELECT iso_country, ident, name, latitude_deg, longitude_deg FROM airport WHERE ident = %s")
     cursor = connection.cursor(dictionary=True)
     cursor.execute(sql, (icao,))
     result = cursor.fetchone()
     return result
 
-def print_player_in_range_ports(in_range_ports):
+def print_player_in_range_ports(in_range_ports): #lentokentät rangella printti
     print_content = []
     for airport in in_range_ports:
         port_name = airport_data(airport[0])['name']
@@ -84,26 +86,37 @@ def print_player_in_range_ports(in_range_ports):
 
 
 current_airport = start_airport
-
+pelaaja_vuorot = 0
+npc_vuorot = 0
 game_running = True
 while game_running:
+    pelaaja_vuorot = pelaaja_vuorot + 1
+    npc_vuorot = npc_vuorot + 1
     # get current airport info
     airport = airport_data(current_airport)
 
     # todo kerrotaan kuinka lähellä on maalia ja kuinka lähellä npc on
     print(f'Olet nyt lentokentällä:  {airport['name']}.')
     print(f'sinulla on {player_range:.0f}kilometriä rangea.')
-    # kysytään haluuako ladata, heittää noppaa tai lentää.
-    do = input('haluatko ladata (lataa), heittää noppaa(heita) tai lentää(lenna)')
-    if do == 'lataa':
-        #lisaa rangea
-    elif do == 'heita':
-        #anna muuttujat mitä nopan silmäluvuilla tulee
-        print(f'heitit silmäluvun {throw_dice()}')
-    elif do == 'lenna':
-        # anna lento vaihtoehdot
-        destination = input('Enter destination icao: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
-        selected_distance = calculate_distance(current_airport, destination)
-        player_range -= selected_distance
-        update_location(destination, player_range)
-        current_airport = destination
+    # kysytään haluuako ladata, heittää noppaa tai lentää laitoin while nii ei tuu väärää kometoa
+    do_run = True
+    while do_run:
+        do = input('haluatko ladata (lataa), heittää noppaa(heita) tai lentää(lenna)')
+        if do == 'lataa':
+            print('latasit akun täyteen')
+            player_range = 600
+            do_run = False
+        elif do == 'heita':
+            #anna muuttujat mitä nopan silmäluvuilla tulee
+            print(f'heitit silmäluvun {throw_dice()}')
+            do_run = False
+        elif do == 'lenna':
+            # anna lento vaihtoehdot
+            destination = input('Enter destination icao: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
+            selected_distance = calculate_distance(current_airport, destination)
+            player_range -= selected_distance
+            update_location(destination, player_range)
+            current_airport = destination
+            do_run = False
+        else:
+            print('annoit väärän komennon')
