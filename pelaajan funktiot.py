@@ -43,6 +43,8 @@ def throw_dice():
 
 throw_dice()
 
+# Nicke
+
 
 
 
