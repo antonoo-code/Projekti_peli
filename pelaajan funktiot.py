@@ -9,6 +9,12 @@ def airports_in_range(icao, airports, player_range):
             in_range.append(airport)
     return in_range
 
+def calculate_distance(current, target):
+    start = get_airport_info(current)
+    end = get_airport_info(target)
+    return distance.distance(start['latitude_deg'], start['longitude_deg']),
+(end['latitude_deg'], end['longitude_deg'])).km
+
 airports = airports_in_range(current_airport, all_airports, player_range)
 print(f"Voit lentää seuraaville lentokentille: {len(airports)}")
 if len(airports) == 0:
