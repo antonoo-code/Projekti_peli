@@ -1,3 +1,5 @@
+from funktio import goal_airport
+from npc_testi import calculate_distance
 
 current_airport = start_airport
 
@@ -8,6 +10,7 @@ while game_running:
 
     # todo kerrotaan kuinka lähellä on maalia ja kuinka lähellä npc on
     print(f'Olet nyt lentokentällä:  {airport['name']}.')
+    print(f'olet {calculate_distance(current_airport, goal_airport)}')
     print(f'sinulla on {player_range:.0f}kilometriä rangea.')
     # kysytään haluuako ladata, heittää noppaa tai lentää.
     do = input('haluatko ladata (lataa), heittää noppaa(heita) tai lentää(lenna)')
