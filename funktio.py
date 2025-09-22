@@ -41,7 +41,7 @@ def airport_data(icao):
 def update_location(icao, p_range): #lokaation muutos pelissä
     sql = ("UPDATE game SET location = %s, player_range = %s")
     cursor = conn.cursor(dictionary=True)
-    cursor.execute(sql, (icao, p_range)
+    cursor.execute(sql, (icao, p_range))
 
 print(f'{airport_data(goal_airport)}')
 

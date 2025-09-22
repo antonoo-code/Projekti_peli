@@ -55,20 +55,17 @@ def print_npc_in_range_ports(in_range_ports):
 
 
 
-def npc_connective_flight(in_range_ports):
+def npc_connective_flight(in_range_ports, goal):
     airport_distances = []
     for airport in in_range_ports:
-        range = calculate_distance(airport[0], 'EDDM')   # EDDM on maalin ident
+        range = calculate_distance(airport[0], goal)   # EDDM on maalin ident
         if range != 0:
             total_distance = airport[1]+ int(range)
             airport_distances.append([airport[0], total_distance]) # airport[1]+range on matka maaliin lähtöpisteestä.
     airports_with_shortest_distance = sorted(airport_distances, key=lambda x: x[1])[:3]
     return airports_with_shortest_distance        
 
-[3,4]
-lista[1][1]
-[[3,4],
- [5,6]]
+
 
 #while- luppi järjestys 
 #nykyinen sijainti
