@@ -24,7 +24,7 @@ else:
 # Kysy seuraavaa kohdetta
 destination = input("Mihin mennään seuraavaksi: ")
 selected_distance = calculate_distance(current_airport, destination)
-player_range -= selected_distance
+player_range = selected_distance
 update_location(destination, player_range, game_id)
 current_airport = destination
 
