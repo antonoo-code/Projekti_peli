@@ -34,8 +34,14 @@ def npc_connective_flight(in_range_ports, goal):  #kun kutsuu niin goal_airport 
         if range != 0:
             total_distance = airport[1]+ int(range)
             airport_distances.append([airport[0], total_distance]) # airport[1]+range on matka maaliin lähtöpisteestä.
-    airports_with_shortest_distance = sorted(airport_distances, key=lambda x: x[1])[:3]
+    airports_with_shortest_distance = sorted(airport_distances, key=distance_from_airport_distance)[:3]
     return airports_with_shortest_distance    
+
+
+def get_npc_destination_icao(npc_flight_options):
+    """Tää funktio palauttaa npc-pelaajan lehtovaihtoehdoista satunnaisesti yhden kentän icao-koodin"""
+    random_index =random.randint(0,len(npc_flight_options)-1)
+    return npc_flight_options[random_index][0]
 
 
 def calculate_distance(current, target):
@@ -49,7 +55,7 @@ def update_location(icao, p_range): #lokaation muutos pelissä
     cursor = conn.cursor(dictionary=True)
     cursor.execute(sql, (icao, p_range))
 
-def player_airport_range_calc(icao, airport_list, player_range): #lentokentät pelaajan rangella
+def player_airport_range_calc(icao, airport_list, player_range):
     in_range = []
     for airport in airport_list:
         range = calculate_distance(icao, airport['ident'])
@@ -84,6 +90,15 @@ def print_player_in_range_ports(in_range_ports): #lentokentät rangella printti
         print_content.append(f'Lentokentän koodi: {airport[0]}, Lentokentän nimi: {port_name}, Lentokentälle on {airport[1]} kilometriä matkaa.')
     print(print_content)
 
+
+
+
+
+all_airports = airports()
+goal_num = random.randint(0,len(all_airports)-1)
+start_num = random.randint(0,len(all_airports)-1)
+goal_airport = all_airports[goal_num]['ident']
+start_airport = all_airports[start_num]['ident']
 
 current_airport = start_airport
 end_airport = airport_data(goal_airport)
