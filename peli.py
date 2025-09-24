@@ -68,7 +68,7 @@ def npc_airport_range_calc(npc_icao, airport_list, npc_range): #lentokentät npc
 
 def throw_dice(): #noppa
     throw_dice = random.randint(1, 6)
-    print(throw_dice)
+    return throw_dice
 
 def airport_data(icao): #lentokentän tiedot
     sql = ("SELECT iso_country, ident, name, latitude_deg, longitude_deg FROM airport WHERE ident = %s")
@@ -94,10 +94,9 @@ print(f'Määränpääsi {end_airport['name']} ja etäisyys sinne on {calculate_
 game_running = True
 while game_running:
     player_turns = player_turns + 1
-    npc_turns = npc_turns + 1
-    # get current airport info
+    #if npc_location != goal_airport:
+    npc_turns = npc_turns + 1 #todo lisätään vuoroja vaan siihen asti että npc maalissa
     airport = airport_data(current_airport)
-
     # todo kerrotaan kuinka lähellä on maalia ja kuinka lähellä npc on
     print(f'Olet nyt lentokentällä:  {airport['name']}.')
     print(f'sinulla on {player_range:.0f} kilometriä rangea.')
@@ -123,3 +122,11 @@ while game_running:
             do_run = False
         else:
             print('annoit väärän komennon')
+    if current_airport == goal_airport:
+        game_running = False
+if player_turns == npc_turns:
+    print('tasapeli')
+elif player_turns > npc_turns:
+    print('voitit')
+elif player_turns < npc_turns:
+    print('hävisit')
