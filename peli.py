@@ -128,6 +128,8 @@ while game_running:
     # kysytään haluuako ladata, heittää noppaa tai lentää laitoin while nii ei tuu väärää kometoa
     do_run = True
     while do_run:
+        print(f'Sinun sijaintisi on: {current_airport} matkaa maaliin on: {calculate_distance(current_airport, goal_airport)} kilometriä.')
+        print(f'Möttösen sijainti on: {npc_current_airport} ja matkaa maaliin on: {calculate_distance(current_airport, goal_airport)} kilometriä.')
         do = input('haluatko ladata (lataa), heittää noppaa(heita) tai lentää(lenna): ')
         if do == 'lataa':
             print('latasit akun täyteen')
@@ -152,6 +154,7 @@ while game_running:
             npc_selected_distance = calculate_distance(npc_current_airport, npc_destination)
             npc_range_1  -= npc_selected_distance
             update_location(npc_destination, npc_range_1)
+            npc_current_airport = npc_destination
         else: # jos range alle 500 npc valitsee latauksen.
             npc_range_1 = 1000
 
