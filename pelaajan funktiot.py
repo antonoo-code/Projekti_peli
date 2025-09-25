@@ -1,7 +1,10 @@
 import random
+from contextlib import nullcontext
+
 import mysql.connector
 from geopy import distance
 
+from peli import npc_connective_flight
 
 connection = mysql.connector.connect(
     port=3306, #oletusarvo ei pakollinen.
@@ -34,7 +37,7 @@ def airport_data(icao):
 
 def update_location(icao, p_range): #lokaation muutos pelissä
     sql = ("UPDATE game SET location = %s, player_range = %s")
-    cursor = conn.cursor(dictionary=True)
+    cursor = connection.cursor(dictionary=True)
     cursor.execute(sql, (icao, p_range))
 
 # Etäisyys kentästä toiseen
@@ -79,6 +82,48 @@ def throw_dice():
     print(throw_dice)
 
 throw_dice()
+
+# Nopanheitto lentokentällä
+
+penalties = ["Salamanisku", "Passi", "Wrongcountry", "NPC", "Fatigue", "Football", "Raffle"]
+
+Salamanisku = print("Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!")
+Passi = print("Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan.")
+Wrongcountry = print("Lentokone lähti lentoon, mutta sen oli tehtävä pakkolasku Atlantille.")
+NPC = print("Huomasit kilpailijan koneen, voittaaksesi kisan kävit vetäisemässä hänen latausjohtonsa irti, hän joutuu odottamaan ylimääräiset 12 tuntia.")
+Fatigue = print("Olet väsynyt, joudut käyttämään ylimääräiset 12 tuntia nukkumiseen.")
+Football = print("Televisiosta tulee lempi jalkapalloseurasi ottelu, katsot sen loppuun ja myöhästyt lennoltasi.")
+Raffle = print("Voitit lentokentän pika-arvonnan ja saat uuden lentokoneen käyttöösi, voit jatkaa lentämistä heti.")
+
+
+def penalty_game():
+    in airports:
+    input("Heitetään noppaa: ")
+    print(throw_dice)
+        random.shuffle(penalties)
+    print(penalties)
+    if Salamanisku:
+        player_range = 600
+    if Passi:
+        update_location = start_airport
+    if Wrongcountry:
+        game_over = True
+    if NPC:
+        npc_connective_flight = null
+    if Fatigue:
+        current_airport = current_airport
+    if Football:
+        current_airport = current_airport
+    if Raffle:
+        current_airport = update_location
+
+
+
+
+
+
+
+
 
 
 
