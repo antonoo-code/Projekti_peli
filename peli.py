@@ -21,6 +21,8 @@ def airports(): #haetaan lentokentät mitä käytetään
 selected_ports = airports()
 
 
+def distance_from_airport_distance(x):
+    return x[1]
 
 def get_npc_connective_flight_options(in_range_ports, goal):  #kun kutsuu niin goal_airport parametriksi goal kohdalle.
     """Etsii npc:lle kolme parasta vaihtoehtoa kaikista kentistä jotka rangessa"""
