@@ -22,7 +22,7 @@ selected_ports = airports()
 
 
 
-def npc_connective_flight(in_range_ports, goal):  #kun kutsuu niin goal_airport parametriksi goal kohdalle.
+def get_npc_connective_flight_options(in_range_ports, goal):  #kun kutsuu niin goal_airport parametriksi goal kohdalle.
     """Etsii npc:lle kolme parasta vaihtoehtoa kaikista kentistä jotka rangessa"""
     airport_distances = []
     for airport in in_range_ports:
@@ -72,9 +72,11 @@ def npc_airport_range_calc(npc_icao, airport_list, npc_range): #lentokentät npc
             in_range.append([airport['ident'], int(range)])
     return in_range
 
+
+
 def throw_dice(): #noppa
-    """Arpoo lentokentän mille npc menee."""
-    throw_dice = random.randint(1, 6)
+    """heittää noppaa 1-6."""
+    throw_dice = random.randint(1, 3)
     return throw_dice
 
 def airport_data(icao): #lentokentän tiedot
@@ -93,6 +95,9 @@ def print_player_in_range_ports(in_range_ports): #lentokentät rangella printti
         print_content.append(f'Lentokentän koodi: {airport[0]}, Lentokentän nimi: {port_name}, Lentokentälle on {airport[1]} kilometriä matkaa.')
     print(print_content)
 
+def main_npc_flight_fuunction(current_location,all_ports, npcrange):
+    """Tärkein funktio laskee mille kentälle npc liikkuu seuraavaksi."""
+    get_npc_destination_icao(get_npc_connective_flight_options(npc_airport_range_calc(current_location, all_ports, npcrange )))
 
 
 
@@ -103,10 +108,12 @@ goal_airport = all_airports[goal_num]['ident']
 start_airport = all_airports[start_num]['ident']
 
 current_airport = start_airport
+npc_current_airport = start_airport
 end_airport = airport_data(goal_airport)
 player_turns = 0
 npc_turns = 0
 player_range = 600
+npc_range_1 = 600
 print(f'Määränpääsi {end_airport['name']} ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä')
 game_running = True
 while game_running:
@@ -140,8 +147,21 @@ while game_running:
             do_run = False
         else:
             print('annoit väärän komennon')
-    if current_airport == goal_airport:
+        if npc_range_1 > 500: #jos npc range yli 500 npc lentää seuraavaavalle kentälle. 
+            npc_destination = main_npc_flight_fuunction(start_num,all_airports, npc_range_1)
+            npc_selected_distance = calculate_distance(npc_current_airport, npc_destination)
+            npc_range_1  -= npc_selected_distance
+            update_location(npc_destination, npc_range_1)
+        else: # jos range alle 500 npc valitsee latauksen.
+            npc_range_1 = 1000
+
+    
+    
+    
+    if current_airport == goal_airport or npc_current_airport == goal_airport:
         game_running = False
+
+
 if player_turns == npc_turns:
     print('tasapeli')
 elif player_turns > npc_turns:
