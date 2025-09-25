@@ -93,7 +93,7 @@ def print_player_in_range_ports(in_range_ports): #lentokentät rangella printti
 
 
 
-
+#hfdhf
 all_airports = airports()
 goal_num = random.randint(0,len(all_airports)-1)
 start_num = random.randint(0,len(all_airports)-1)
