@@ -69,7 +69,7 @@ else:
         print(f"{airport['nimi']}, icao: {airport['ident']}, distance: {airport_distance:0f}km")
 
 # Kysy seuraavaa kohdetta
-destination = input("Mihin mennään seuraavaksi: ")
+destination = input("Mihin mennään seuraavaksi?: ")
 selected_distance = calculate_distance(current_airport, destination)
 player_range = selected_distance
 update_location(destination, player_range, game_id)
