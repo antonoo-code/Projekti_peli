@@ -72,7 +72,13 @@ def npc_airport_range_calc(npc_icao, airport_list, npc_range): #lentokentät npc
             in_range.append([airport['ident'], int(range)])
     return in_range
 
-
+def get_airport_name(icao):
+    """Etsii halutun kentän nimen käyttäen icaota."""
+    sql = (f"SELECT name FROM airport WHERE ident = '{icao}'")
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute(sql)
+    result = cursor.fetchone()
+    return result ['name']
 
 def throw_dice(): #noppa
     """heittää noppaa 1-6."""
@@ -118,18 +124,16 @@ print(f'Määränpääsi {end_airport['name']} ja etäisyys sinne on {calculate_
 game_running = True
 while game_running:
     player_turns = player_turns + 1
-    #if npc_location != goal_airport:
+    if npc_current_airport != goal_airport:
     npc_turns = npc_turns + 1 #todo lisätään vuoroja vaan siihen asti että npc maalissa
     airport = airport_data(current_airport)
 
-    # todo kerrotaan kuinka lähellä on maalia ja kuinka lähellä npc on
-    print(f'Olet nyt lentokentällä:  {airport['name']}.')
-    print(f'sinulla on {player_range:.0f} kilometriä rangea.')
+
     # kysytään haluuako ladata, heittää noppaa tai lentää laitoin while nii ei tuu väärää kometoa
     do_run = True
     while do_run:
-        print(f'Sinun sijaintisi on: {current_airport} matkaa maaliin on: {calculate_distance(current_airport, goal_airport)} kilometriä.')
-        print(f'Möttösen sijainti on: {npc_current_airport} ja matkaa maaliin on: {calculate_distance(current_airport, goal_airport)} kilometriä.')
+        print(f'Sinun sijaintisi on: {get_airport_name(current_airport)} matkaa maaliin on: {calculate_distance(current_airport, goal_airport)} kilometriä, sekä sinulla on rangea jäljellä {player_range} kilometriä.')
+        print(f'Möttösen sijainti on: {get_airport_name(npc_current_airport)} ja matkaa maaliin on: {calculate_distance(current_airport, goal_airport)} kilometriä.')
         do = input('haluatko ladata (lataa), heittää noppaa(heita) tai lentää(lenna): ')
         if do == 'lataa':
             print('latasit akun täyteen')
@@ -155,9 +159,10 @@ while game_running:
             npc_range_1  -= npc_selected_distance
             update_location(npc_destination, npc_range_1)
             npc_current_airport = npc_destination
+            do_run = False
         else: # jos range alle 500 npc valitsee latauksen.
             npc_range_1 = 1000
-
+            do_run = False
     
     
     
