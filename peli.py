@@ -148,12 +148,16 @@ def main_npc_flight_fuunction(current_location,all_ports, npcrange, goalport): #
     print(destination)
     return destination
 
+
+
+
+
 all_airports = airports()
 goal_num = random.randint(0,len(all_airports)-1)
 start_num = random.randint(0,len(all_airports)-1)
-goal_airport = all_airports[goal_num]['ident']
-start_airport = all_airports[start_num]['ident']
 
+start_airport = all_airports[start_num]['ident']
+goal_airport = player_airport_range_calc(start_airport, all_airports, 1500) # tee oikein anton
 
 
 
@@ -202,15 +206,18 @@ while game_running:
                     print(i)
                 destination = input('Enter destination icao: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
                 for option in player_flight_options:
-                    if option == destination:
+                    if option[1] == destination:
                         selected_distance = calculate_distance(current_airport, destination)
                         player_range -= selected_distance
                         update_location(destination, player_range)
                         current_airport = destination
                         do_run = False
                         lenna = False
-                else:
-                    print('Syötit väärän icao koodin.')
+                if lenna == True:
+                    print('Syötit väärän icao koodin!!')
+                        
+
+                    
                       
         else:
             print('annoit väärän komennon')
