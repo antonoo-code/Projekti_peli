@@ -2,6 +2,9 @@ from geopy import distance
 import mysql.connector
 import random
 
+NPC_NUBER_OF_OPTIONS = 2
+NPC_NUBER_OF_RANDOM_OPTIONS = 1
+
 connection = mysql.connector.connect(
     port=3306, #oletusarvo ei pakollinen.
     host="127.0.0.1", #oletusarvo ei pakollinen.
@@ -25,30 +28,27 @@ def distance_from_airport_distance(x): #Anton
     return x[1]
 
 def get_npc_connective_flight_options(in_range_ports, goal): #Anton
-    """Etsii npc:lle kolme parasta vaihtoehtoa kaikista kentistä jotka rangessa"""
+    """Etsii npc:lle N parasta vaihtoehtoa kaikista kentistä jotka rangessa"""
     airport_distances = []
     for airport in in_range_ports:
         range = calculate_distance(airport[0], goal)  
-        if range != 0 :
-            total_distance = airport[1]+ int(range)
-            airport_distances.append([airport[0], total_distance]) # airport[1]+range on matka maaliin lähtöpisteestä.
-    airports_with_shortest_distance = sorted(airport_distances, key=distance_from_airport_distance)[:3]
-    return airports_with_shortest_distance    
-
-def get_npc_connective_flight_options(in_range_ports):  #kun kutsuu niin goal_airport parametriksi goal kohdalle.
-    airport_distances = []
-    for airport in in_range_ports:
-        range = calculate_distance(airport[0], 'EDDM')   # EDDM on maalin ident
-        if range != 0:
-            total_distance = airport[1]+ int(range)
-            airport_distances.append([airport[0], total_distance]) # airport[1]+range on matka maaliin lähtöpisteestä.
-    airports_with_shortest_distance = sorted(airport_distances, key=distance_from_airport_distance)[:3]
-    return airports_with_shortest_distance   
+        airport_distances.append([airport[0], range])
+    result_connective_flights = sorted(airport_distances, key=distance_from_airport_distance)[:NPC_NUBER_OF_OPTIONS]
+    #Lisää satunnaisia kenttiä, jotta npc ei lennä täysin suoraan maaliin.
+    for r in range(0, NPC_NUBER_OF_RANDOM_OPTIONS):
+        random_port_index = random.randint(0, len(in_range_ports)-1)
+        result_connective_flights.append(in_range_ports[random_port_index])
+    return result_connective_flights    
 
 
-def get_npc_destination_icao(npc_flight_options): #Anton
+def get_npc_destination_icao(npc_flight_options, goal): #Anton
     """Tää funktio palauttaa npc-pelaajan lehtovaihtoehdoista satunnaisesti yhden kentän icao-koodin"""
+    for airport in npc_flight_options:
+        if airport[0] == goal:
+            print(f'flight of victory')
+            return goal #npc maalissa.
     random_index =random.randint(0,len(npc_flight_options)-1)
+    print(f'uusing flightnuum {random_index}')
     return npc_flight_options[random_index][0]
 
 
@@ -133,8 +133,12 @@ def print_player_in_range_ports(in_range_ports): #Anton
 
 def main_npc_flight_fuunction(current_location,all_ports, npcrange, goalport): #Anton
     """Tärkein funktio laskee mille kentälle npc liikkuu seuraavaksi."""
-    destination = get_npc_destination_icao(get_npc_connective_flight_options(npc_airport_range_calc(current_location, all_ports, npcrange ),goalport))
-    
+    npc_airport_range = npc_airport_range_calc(current_location, all_ports, npcrange)
+    print(f'in range {npc_airport_range}')
+    npc_connective_flight_options = get_npc_connective_flight_options(npc_airport_range, goalport)
+    print(f' vaihtoehdot {npc_connective_flight_options}')
+    destination = get_npc_destination_icao(npc_connective_flight_options, goalport)
+    print(destination)
     return destination
 
 all_airports = airports()
@@ -152,7 +156,7 @@ end_airport = airport_data(goal_airport)
 player_turns = 0
 npc_turns = 0
 player_range = 600
-npc_range_1 = 4000
+npc_range_1 = 800
 print(f'Määränpääsi {end_airport['name']} ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä')
 game_running = True
 while game_running:
