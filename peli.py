@@ -195,16 +195,23 @@ while game_running:
             
             do_run = False
         elif do == 'lenna':
-            player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
-                
-            for i in player_flight_options:
-                print(i)
-            destination = input('Enter destination icao: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
-            selected_distance = calculate_distance(current_airport, destination)
-            player_range -= selected_distance
-            update_location(destination, player_range)
-            current_airport = destination
-            do_run = False
+            lenna = True
+            while lenna:
+                player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
+                for i in player_flight_options: #Anton
+                    print(i)
+                destination = input('Enter destination icao: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
+                for option in player_flight_options:
+                    if option == destination:
+                        selected_distance = calculate_distance(current_airport, destination)
+                        player_range -= selected_distance
+                        update_location(destination, player_range)
+                        current_airport = destination
+                        do_run = False
+                        lenna = False
+                else:
+                    print('Syötit väärän icao koodin.')
+                      
         else:
             print('annoit väärän komennon')
 
