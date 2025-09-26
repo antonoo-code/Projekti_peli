@@ -82,10 +82,28 @@ def get_airport_name(icao): #Anton
     result = cursor.fetchone()
     return result ['name']
 
+def get_list_function(x):   
+    """Syötetään x paikalle nopan saatu silmäluku ja funktio kertoo mikä tapahtuuma siitä tulee."""
+    penalties = ["Salamanisku", "Passi", "Wrongcountry", "NPC", "Fatigue", "Football", "Raffle"]
+    funktion = penalties[x]
+    return funktion
+
 def throw_dice(): #noppa
     """heittää noppaa 1-6."""
-    throw_dice = random.randint(1, 3)
+    throw_dice = random.randint(0, 6)
     return throw_dice
+
+def what_happens(tulos, pelaajan_range):
+    """Kertoo mitä millakin nopan silmäluuvulla tapahtuu."""
+    if tulos == "Raffle":
+        #Mitä pelin koodissa tapahtuu
+        print("Voitit lentokentän pika-arvonnan ja saat uuden lentokoneen käyttöösi, voit jatkaa lentämistä heti.")
+        return
+    elif tulos == "Football":
+        #Mitä pelin koodissa tapahtuu
+        print("Televisiosta tulee lempi jalkapalloseurasi ottelu, katsot sen loppuun ja myöhästyt lennoltasi.")
+
+
 
 def airport_data(icao): #lentokentän tiedot
     """Hakee tietokannasta kaikki tiedot identillä."""
@@ -114,6 +132,9 @@ start_num = random.randint(0,len(all_airports)-1)
 goal_airport = all_airports[goal_num]['ident']
 start_airport = all_airports[start_num]['ident']
 
+
+
+
 current_airport = start_airport
 npc_current_airport = start_airport
 end_airport = airport_data(goal_airport)
@@ -141,8 +162,8 @@ while game_running:
             player_range = 600
             do_run = False
         elif do == 'heita':
-            #anna muuttujat mitä nopan silmäluvuilla tulee
-            print(f'heitit silmäluvun {throw_dice()}')
+            get_list_function(throw_dice())
+            
             do_run = False
         elif do == 'lenna':
             player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
