@@ -124,9 +124,10 @@ def penalty_game():
 
 
 
-
-
-
+def get_list_function(x):   
+    penalties = ["Salamanisku", "Passi", "Wrongcountry", "NPC", "Fatigue", "Football", "Raffle"]
+    funktion = penalties[x]
+    return funktion
 
 
 

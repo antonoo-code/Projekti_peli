@@ -29,11 +29,21 @@ def get_npc_connective_flight_options(in_range_ports, goal): #Anton
     airport_distances = []
     for airport in in_range_ports:
         range = calculate_distance(airport[0], goal)  
-        if range != 0:
+        if range != 0 :
             total_distance = airport[1]+ int(range)
             airport_distances.append([airport[0], total_distance]) # airport[1]+range on matka maaliin lähtöpisteestä.
     airports_with_shortest_distance = sorted(airport_distances, key=distance_from_airport_distance)[:3]
     return airports_with_shortest_distance    
+
+def get_npc_connective_flight_options(in_range_ports):  #kun kutsuu niin goal_airport parametriksi goal kohdalle.
+    airport_distances = []
+    for airport in in_range_ports:
+        range = calculate_distance(airport[0], 'EDDM')   # EDDM on maalin ident
+        if range != 0:
+            total_distance = airport[1]+ int(range)
+            airport_distances.append([airport[0], total_distance]) # airport[1]+range on matka maaliin lähtöpisteestä.
+    airports_with_shortest_distance = sorted(airport_distances, key=distance_from_airport_distance)[:3]
+    return airports_with_shortest_distance   
 
 
 def get_npc_destination_icao(npc_flight_options): #Anton
@@ -82,10 +92,28 @@ def get_airport_name(icao): #Anton
     result = cursor.fetchone()
     return result ['name']
 
+def get_list_function(x):   
+    """Syötetään x paikalle nopan saatu silmäluku ja funktio kertoo mikä tapahtuuma siitä tulee."""
+    penalties = ["Salamanisku", "Passi", "Wrongcountry", "NPC", "Fatigue", "Football", "Raffle"]
+    funktion = penalties[x]
+    return funktion
+
 def throw_dice(): #noppa
     """heittää noppaa 1-6."""
-    throw_dice = random.randint(1, 3)
+    throw_dice = random.randint(0, 6)
     return throw_dice
+
+def what_happens(tulos, pelaajan_range):
+    """Kertoo mitä millakin nopan silmäluuvulla tapahtuu."""
+    if tulos == "Raffle":
+        #Mitä pelin koodissa tapahtuu
+        print("Voitit lentokentän pika-arvonnan ja saat uuden lentokoneen käyttöösi, voit jatkaa lentämistä heti.")
+        return
+    elif tulos == "Football":
+        #Mitä pelin koodissa tapahtuu
+        print("Televisiosta tulee lempi jalkapalloseurasi ottelu, katsot sen loppuun ja myöhästyt lennoltasi.")
+
+
 
 def airport_data(icao): #lentokentän tiedot
     """Hakee tietokannasta kaikki tiedot identillä."""
@@ -106,6 +134,7 @@ def print_player_in_range_ports(in_range_ports): #Anton
 def main_npc_flight_fuunction(current_location,all_ports, npcrange, goalport): #Anton
     """Tärkein funktio laskee mille kentälle npc liikkuu seuraavaksi."""
     destination = get_npc_destination_icao(get_npc_connective_flight_options(npc_airport_range_calc(current_location, all_ports, npcrange ),goalport))
+    
     return destination
 
 all_airports = airports()
@@ -114,13 +143,16 @@ start_num = random.randint(0,len(all_airports)-1)
 goal_airport = all_airports[goal_num]['ident']
 start_airport = all_airports[start_num]['ident']
 
+
+
+
 current_airport = start_airport
 npc_current_airport = start_airport
 end_airport = airport_data(goal_airport)
 player_turns = 0
 npc_turns = 0
 player_range = 600
-npc_range_1 = 600
+npc_range_1 = 4000
 print(f'Määränpääsi {end_airport['name']} ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä')
 game_running = True
 while game_running:
@@ -135,17 +167,25 @@ while game_running:
     while do_run:
         print(f'Sinun sijaintisi on: {get_airport_name(current_airport)} matkaa maaliin on: {calculate_distance(current_airport, goal_airport)} kilometriä, sekä sinulla on rangea jäljellä {player_range} kilometriä.') #Anton
         print(f'Möttösen sijainti on: {get_airport_name(npc_current_airport)} ja matkaa maaliin on: {calculate_distance(npc_current_airport, goal_airport)} kilometriä.') #Anton
-        do = input('haluatko ladata (lataa), heittää noppaa(heita) tai lentää(lenna): ')
+        
+        player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
+        if player_flight_options == "None":
+            print('Sinulla ei ole rangea lentää minnekkään.')
+            do = input('haluatko ladata (lataa), heittää noppaa(heita): ')
+        else:
+            do = input('haluatko ladata (lataa), heittää noppaa(heita) tai lentää(lenna): ')
+        
         if do == 'lataa':
             print('latasit akun täyteen')
             player_range = 600
             do_run = False
         elif do == 'heita':
-            #anna muuttujat mitä nopan silmäluvuilla tulee
-            print(f'heitit silmäluvun {throw_dice()}')
+            get_list_function(throw_dice())
+            
             do_run = False
         elif do == 'lenna':
             player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
+                
             for i in player_flight_options:
                 print(i)
             destination = input('Enter destination icao: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
@@ -156,16 +196,17 @@ while game_running:
             do_run = False
         else:
             print('annoit väärän komennon')
-        if npc_range_1 > 500: #jos npc range yli 500 npc lentää seuraavaavalle kentälle. #Anton
-            npc_destination = main_npc_flight_fuunction(npc_current_airport,all_airports, npc_range_1, goal_airport)  
-            npc_selected_distance = calculate_distance(npc_current_airport, npc_destination)
-            npc_range_1  -= npc_selected_distance
-            update_location(npc_destination, npc_range_1)
-            npc_current_airport = npc_destination
-            do_run = False
-        else: # jos range alle 500 npc valitsee latauksen.
-            npc_range_1 = 1000
-            do_run = False #Anton
+
+    if npc_range_1 > 500: #jos npc range yli 500 npc lentää seuraavaavalle kentälle. #Anton
+        npc_destination = main_npc_flight_fuunction(npc_current_airport,all_airports, npc_range_1, goal_airport)  
+        npc_selected_distance = calculate_distance(npc_current_airport, npc_destination)
+        npc_range_1  -= npc_selected_distance
+        update_location(npc_destination, npc_range_1)
+        npc_current_airport = npc_destination
+        do_run = False
+    else: # jos range alle 500 npc valitsee latauksen.
+        npc_range_1 = 1000
+        do_run = False #Anton
     
     
     if current_airport == goal_airport or npc_current_airport == goal_airport:
