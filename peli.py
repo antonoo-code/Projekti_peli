@@ -52,7 +52,7 @@ def calculate_distance(current, target):
 
 def update_location(icao, p_range): #lokaation muutos pelissä
     sql = ("UPDATE game SET location = %s, player_range = %s")
-    cursor = conn.cursor(dictionary=True)
+    cursor = connection.cursor(dictionary=True)
     cursor.execute(sql, (icao, p_range))
 
 def player_airport_range_calc(icao, airport_list, player_range):
