@@ -2,8 +2,8 @@ from geopy import distance
 import mysql.connector
 import random
 
-NPC_NUBER_OF_OPTIONS = 2
-NPC_NUBER_OF_RANDOM_OPTIONS = 1
+NPC_NUBER_OF_OPTIONS = 3
+NPC_NUBER_OF_RANDOM_OPTIONS = 2
 
 connection = mysql.connector.connect(
     port=3306, #oletusarvo ei pakollinen.
@@ -30,11 +30,12 @@ def distance_from_airport_distance(x): #Anton
 def get_npc_connective_flight_options(in_range_ports, goal): #Anton
     """Etsii npc:lle N parasta vaihtoehtoa kaikista kentistä jotka rangessa"""
     airport_distances = []
+    #Etsitään n määräkenttiä lähimpänä maalia.
     for airport in in_range_ports:
-        range = calculate_distance(airport[0], goal)  
-        airport_distances.append([airport[0], range])
+        plane_range = calculate_distance(airport[0], goal)  
+        airport_distances.append([airport[0], plane_range])
     result_connective_flights = sorted(airport_distances, key=distance_from_airport_distance)[:NPC_NUBER_OF_OPTIONS]
-    #Lisää satunnaisia kenttiä, jotta npc ei lennä täysin suoraan maaliin.
+    #Lisätään mukaan satuunnaisia kenttiä vaikeuttamaan npc:n reittiä.
     for r in range(0, NPC_NUBER_OF_RANDOM_OPTIONS):
         random_port_index = random.randint(0, len(in_range_ports)-1)
         result_connective_flights.append(in_range_ports[random_port_index])
@@ -82,6 +83,12 @@ def npc_airport_range_calc(npc_icao, airport_list, npc_range): #Anton
         range = calculate_distance(npc_icao, airport['ident'])
         if range <= npc_range and range != 0:
             in_range.append([airport['ident'], int(range)])
+    #Jos rangesta ei löydy kenttiä tarjotaan vapaa pääsy satuunnaiselle kentälle.
+    if len(in_range) == 0:
+        random_nm = random.randint(0, len(airport_list)-1)
+        random_icao = airport_list[random_nm]
+        range = calculate_distance(random_icao, npc_icao)
+        in_range.append([random_icao, int(range)])
     return in_range
 
 def get_airport_name(icao): #Anton

@@ -13,7 +13,7 @@ connection = mysql.connector.connect(
 
 
 
-def airports():
+"""def airports():
     sql = ("SELECT iso_country, ident, name, type, latitude_deg, longitude_deg FROM airport WHERE continent = 'EU' AND type = 'large_airport' limit 20;")
     cursor = connection.cursor(dictionary = True)
     cursor.execute(sql)
@@ -74,7 +74,7 @@ def get_npc_connective_flight_options(in_range_ports):  #kun kutsuu niin goal_ai
     return airports_with_shortest_distance          
 
 def get_npc_destination_icao(npc_flight_options):
-    """Tää funktio palauttaa npc-pelaajan lehtovaihtoehdoista satunnaisesti yhden kentän icao-koodin"""
+   
     random_index =random.randint(0,len(npc_flight_options)-1)
     return npc_flight_options[random_index][0]
     
@@ -102,7 +102,7 @@ print(npc_options)
 npc_destination = get_npc_connective_flight_options(npc_airport_range_ca
 
 def main_npc_flight_fuunction(current_location,all_ports, npcrange): #Anton
-    """Tärkein funktio laskee mille kentälle npc liikkuu seuraavaksi."""
+   
     get_npc_destination_icao(get_npc_connective_flight_options(npc_airport_range_calc(current_location, all_ports, npcrange )))
 
 
