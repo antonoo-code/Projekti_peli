@@ -96,6 +96,38 @@ Football = print("Televisiosta tulee lempi jalkapalloseurasi ottelu, katsot sen 
 Raffle = print("Voitit lentokentän pika-arvonnan ja saat uuden lentokoneen käyttöösi, voit jatkaa lentämistä heti.")
 
 
+# Noppafunktiot Nicke
+def what_happens(tulos, pelaajan_range):
+    """Kertoo mitä millakin nopan silmäluuvulla tapahtuu."""
+    if tulos == "Raffle":
+        current_airport = update_location
+        print("Voitit lentokentän pika-arvonnan ja saat uuden lentokoneen käyttöösi, voit jatkaa lentämistä heti.")
+        return
+    elif tulos == "Football":
+        current_airport = True
+        print("Televisiosta tulee lempi jalkapalloseurasi ottelu, katsot sen loppuun ja myöhästyt lennoltasi.")
+        return
+    elif tulos == "Salamanisku":
+        player_range = 800
+        print("Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!")
+        return
+    elif tulos == "Passi":
+        current_airport = start_airport
+        print("Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan.")
+        return
+    elif tulos == "NPC":
+        npc_current_airport = True
+        print("Huomasit kilpailijan koneen, voittaaksesi kisan kävit vetäisemässä hänen latausjohtonsa irti, hän joutuu odottamaan ylimääräiset 12 tuntia.")
+        return
+    elif tulos == "Fatigue":
+        current_airport = True
+        print("Olet väsynyt, joudut käyttämään ylimääräiset 12 tuntia nukkumiseen.")
+        return
+    elif tulos == "Football":
+        current_airport = True
+        print("Televisiosta tulee lempi jalkapalloseurasi ottelu, katsot sen loppuun ja myöhästyt lennoltasi.")
+        return
+
 def penalty_game():
     in airports:
     input("Heitetään noppaa: ")
