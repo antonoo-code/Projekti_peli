@@ -3,7 +3,11 @@ import mysql.connector
 import random
 
 NPC_NUBER_OF_OPTIONS = 3
-NPC_NUBER_OF_RANDOM_OPTIONS = 2
+GAME_AIRPORT_LIMIT = 100
+NPC_RANGE = 1200
+
+NPC_visited_ports = set()
+
 
 connection = mysql.connector.connect(
     port=3306, #oletusarvo ei pakollinen.
@@ -15,7 +19,8 @@ connection = mysql.connector.connect(
 
 
 def airports(): #haetaan lentokentät mitä käytetään
-    sql = ("SELECT iso_country, ident, name, type, latitude_deg, longitude_deg FROM airport WHERE continent = 'EU' AND type = 'large_airport' limit 20;")
+    haku = f"SELECT iso_country, ident, name, type, latitude_deg, longitude_deg FROM airport WHERE continent = 'EU' AND type = 'large_airport' limit {GAME_AIRPORT_LIMIT};"
+    sql = (haku)
     """Hakee tietokannasta haltuut lentokentät ja niistä kaikki oleelliset tiedot."""
     cursor = connection.cursor(dictionary = True)
     cursor.execute(sql)
@@ -34,24 +39,24 @@ def get_npc_connective_flight_options(in_range_ports, goal): #Anton
     for airport in in_range_ports:
         plane_range = calculate_distance(airport[0], goal)  
         airport_distances.append([airport[0], plane_range])
-    result_connective_flights = sorted(airport_distances, key=distance_from_airport_distance)[:NPC_NUBER_OF_OPTIONS]
-    #Lisätään mukaan satuunnaisia kenttiä vaikeuttamaan npc:n reittiä.
-    for r in range(0, NPC_NUBER_OF_RANDOM_OPTIONS):
-        random_port_index = random.randint(0, len(in_range_ports)-1)
-        result_connective_flights.append(in_range_ports[random_port_index])
-    return result_connective_flights    
-
+    result_connective_flights = sorted(airport_distances, key=distance_from_airport_distance)[:NPC_NUBER_OF_OPTIONS]   
+    return result_connective_flights
 
 def get_npc_destination_icao(npc_flight_options, goal): #Anton
     """Tää funktio palauttaa npc-pelaajan lehtovaihtoehdoista satunnaisesti yhden kentän icao-koodin"""
+    if len(npc_flight_options) == 0:
+        return None
+    print(f'debg{npc_flight_options}')
     for airport in npc_flight_options:
         if airport[0] == goal:
             print(f'flight of victory')
             return goal #npc maalissa.
-    random_index =random.randint(0,len(npc_flight_options)-1)
-    print(f'uusing flightnuum {random_index}')
-    return npc_flight_options[random_index][0]
+    if len(npc_flight_options)> 1:
+        random_index =random.randint(0,len(npc_flight_options)-1)
+    else:
+        random_index = 0
 
+    return npc_flight_options[random_index][0]
 
 def calculate_distance(current, target): #Anton
     """Laskee etäisyyden nykyisen ja mahdollisen seuraavan kentän väliltä."""
@@ -80,15 +85,13 @@ def npc_airport_range_calc(npc_icao, airport_list, npc_range): #Anton
     """Kertoo mitkä kentät ovat npc:n rangen sisällä."""
     in_range = []
     for airport in airport_list:
+        if airport['ident'] in NPC_visited_ports:
+            continue
         range = calculate_distance(npc_icao, airport['ident'])
         if range <= npc_range and range != 0:
             in_range.append([airport['ident'], int(range)])
-    #Jos rangesta ei löydy kenttiä tarjotaan vapaa pääsy satuunnaiselle kentälle.
-    if len(in_range) == 0:
-        random_nm = random.randint(0, len(airport_list)-1)
-        random_icao = airport_list[random_nm]
-        range = calculate_distance(random_icao, npc_icao)
-        in_range.append([random_icao, int(range)])
+
+
     return in_range
 
 def get_airport_name(icao): #Anton
@@ -162,15 +165,26 @@ def print_player_in_range_ports(in_range_ports): #Anton
 def main_npc_flight_fuunction(current_location,all_ports, npcrange, goalport): #Anton
     """Tärkein funktio laskee mille kentälle npc liikkuu seuraavaksi."""
     npc_airport_range = npc_airport_range_calc(current_location, all_ports, npcrange)
-    print(f'in range {npc_airport_range}')
     npc_connective_flight_options = get_npc_connective_flight_options(npc_airport_range, goalport)
     print(f' vaihtoehdot {npc_connective_flight_options}')
     destination = get_npc_destination_icao(npc_connective_flight_options, goalport)
+    if destination != None:
+        NPC_visited_ports.add(destination)
     print(destination)
     return destination
 
-
-
+def get_goal_airports(start,allports): #haetaan alku lentokenttä.
+    """Funktio listaa kaikista knetistä kentäntät jotka ovat kauimpana maalista joka on generoitu."""
+    goal_airport_options = []
+    for airport in allports:
+        range = calculate_distance(airport['ident'], start)  
+        goal_airport_options.append([airport['ident'], range])
+    goal_airport_options = sorted(goal_airport_options, key=distance_from_airport_distance, reverse=True)[:4]
+    random_index =random.randint(0,len(goal_airport_options)-1)
+    random_goal_port = goal_airport_options[random_index]
+    goal = random_goal_port[0]
+    return goal
+    
 
 
 all_airports = airports()
@@ -178,8 +192,8 @@ goal_num = random.randint(0,len(all_airports)-1)
 start_num = random.randint(0,len(all_airports)-1)
 
 start_airport = all_airports[start_num]['ident']
-goal_airport = player_airport_range_calc(start_airport, all_airports, 1500) # tee oikein anton
-
+goal_airport =  get_goal_airports(start_airport, all_airports)
+print(goal_airport)
 
 
 current_airport = start_airport
@@ -188,7 +202,7 @@ end_airport = airport_data(goal_airport)
 player_turns = 0
 npc_turns = 0
 player_range = 600
-npc_range_1 = 800
+npc_range_1 = NPC_RANGE
 print(f'Määränpääsi {end_airport['name']} ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä')
 game_running = True
 while game_running:
@@ -236,22 +250,24 @@ while game_running:
                         lenna = False
                 if lenna == True:
                     print('Syötit väärän icao koodin!!')
-                        
-
-                    
-                      
+                                      
         else:
             print('annoit väärän komennon')
-
-    if npc_range_1 > 500: #jos npc range yli 500 npc lentää seuraavaavalle kentälle. #Anton
-        npc_destination = main_npc_flight_fuunction(npc_current_airport,all_airports, npc_range_1, goal_airport)  
+    
+    
+    npc_destination = main_npc_flight_fuunction(npc_current_airport,all_airports, npc_range_1, goal_airport)
+    if npc_destination == None:
+        npc_range_1 = npc_range_1 + 500
+        print(f'Möttössellä ei löytynyt kenttiä ranglta ja nyt möttönen alkoi superchargeamaan lentokonettaa XD  {npc_range_1}')
+        do_run = False
+    elif npc_range_1 > 500 : #jos npc range yli 500 npc lentää seuraavaavalle kentälle. #Anton  
         npc_selected_distance = calculate_distance(npc_current_airport, npc_destination)
         npc_range_1  -= npc_selected_distance
         update_location(npc_destination, npc_range_1)
         npc_current_airport = npc_destination
         do_run = False
     else: # jos range alle 500 npc valitsee latauksen.
-        npc_range_1 = 1000
+        npc_range_1 = NPC_RANGE
         do_run = False #Anton
     
     
