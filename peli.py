@@ -110,16 +110,37 @@ def throw_dice(): #noppa
     throw_dice = random.randint(0, 6)
     return throw_dice
 
+# Noppafunktiot Nicke
 def what_happens(tulos, pelaajan_range):
     """Kertoo mitä millakin nopan silmäluuvulla tapahtuu."""
     if tulos == "Raffle":
-        #Mitä pelin koodissa tapahtuu
+        current_airport = update_location
         print("Voitit lentokentän pika-arvonnan ja saat uuden lentokoneen käyttöösi, voit jatkaa lentämistä heti.")
         return
     elif tulos == "Football":
-        #Mitä pelin koodissa tapahtuu
+        current_airport = True
         print("Televisiosta tulee lempi jalkapalloseurasi ottelu, katsot sen loppuun ja myöhästyt lennoltasi.")
-
+        return
+    elif tulos == "Salamanisku":
+        player_range = 800
+        print("Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!")
+        return
+    elif tulos == "Passi":
+        current_airport = start_airport
+        print("Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan.")
+        return
+    elif tulos == "NPC":
+        npc_current_airport = True
+        print("Huomasit kilpailijan koneen, voittaaksesi kisan kävit vetäisemässä hänen latausjohtonsa irti, hän joutuu odottamaan ylimääräiset 12 tuntia.")
+        return
+    elif tulos == "Fatigue":
+        current_airport = True
+        print("Olet väsynyt, joudut käyttämään ylimääräiset 12 tuntia nukkumiseen.")
+        return
+    elif tulos == "Football":
+        current_airport = True
+        print("Televisiosta tulee lempi jalkapalloseurasi ottelu, katsot sen loppuun ja myöhästyt lennoltasi.")
+        return
 
 
 def airport_data(icao): #lentokentän tiedot
@@ -148,12 +169,16 @@ def main_npc_flight_fuunction(current_location,all_ports, npcrange, goalport): #
     print(destination)
     return destination
 
+
+
+
+
 all_airports = airports()
 goal_num = random.randint(0,len(all_airports)-1)
 start_num = random.randint(0,len(all_airports)-1)
-goal_airport = all_airports[goal_num]['ident']
-start_airport = all_airports[start_num]['ident']
 
+start_airport = all_airports[start_num]['ident']
+goal_airport = player_airport_range_calc(start_airport, all_airports, 1500) # tee oikein anton
 
 
 
@@ -195,16 +220,26 @@ while game_running:
             
             do_run = False
         elif do == 'lenna':
-            player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
-                
-            for i in player_flight_options:
-                print(i)
-            destination = input('Enter destination icao: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
-            selected_distance = calculate_distance(current_airport, destination)
-            player_range -= selected_distance
-            update_location(destination, player_range)
-            current_airport = destination
-            do_run = False
+            lenna = True
+            while lenna:
+                player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
+                for i in player_flight_options: #Anton
+                    print(i)
+                destination = input('Enter destination icao: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
+                for option in player_flight_options:
+                    if option[1] == destination:
+                        selected_distance = calculate_distance(current_airport, destination)
+                        player_range -= selected_distance
+                        update_location(destination, player_range)
+                        current_airport = destination
+                        do_run = False
+                        lenna = False
+                if lenna == True:
+                    print('Syötit väärän icao koodin!!')
+                        
+
+                    
+                      
         else:
             print('annoit väärän komennon')
 
