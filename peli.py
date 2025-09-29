@@ -104,7 +104,7 @@ def get_airport_name(icao): #Anton
 
 def get_list_function(x):   
     """Syötetään x paikalle nopan saatu silmäluku ja funktio kertoo mikä tapahtuuma siitä tulee."""
-    penalties = ["Salamanisku", "Passi", "Wrongcountry", "NPC", "Fatigue", "Football", "Raffle"]
+    penalties = ["Salamanisku", "Passi", "President", "Fatigue", "Bet", "Raffle"]
     funktion = penalties[x]
     return funktion
 
@@ -114,36 +114,26 @@ def throw_dice(): #noppa
     return throw_dice
 
 # Noppafunktiot Nicke
-def what_happens(tulos, player_range, current_airport, npc_current_airport, start_airport, heita):
+def what_happens(tulos, player_range, current_airport, start_airport, npc_range_1):
     """Kertoo mitä millakin nopan silmäluuvulla tapahtuu."""
     if tulos == "Raffle":
-        current_airport = update_location
         print("Voitit lentokentän pika-arvonnan ja saat uuden lentokoneen käyttöösi, voit jatkaa lentämistä heti.")
-        return
-    elif tulos == "Football":
-        current_airport = True
-        print("Televisiosta tulee lempi jalkapalloseurasi ottelu, katsot sen loppuun ja myöhästyt lennoltasi.")
-        return
+        return player_range == 600
+    elif tulos == "President":
+        print("Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle uuden lentokoneen!")
+        return player_range == 600
     elif tulos == "Salamanisku":
-        player_range = 800
         print("Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!")
-        return
+        return player_range == 800
     elif tulos == "Passi":
-        current_airport = start_airport
         print("Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan.")
-        return
-    elif tulos == "NPC":
-        npc_current_airport = True
-        print("Huomasit kilpailijan koneen, voittaaksesi kisan kävit vetäisemässä hänen latausjohtonsa irti, hän joutuu odottamaan ylimääräiset 12 tuntia.")
-        return
+        return current_airport == start_airport
     elif tulos == "Fatigue":
-        current_airport = True
-        print("Olet väsynyt, joudut käyttämään ylimääräiset 12 tuntia nukkumiseen.")
-        return
-    elif tulos == "Football":
-        current_airport = True
-        print("Televisiosta tulee lempi jalkapalloseurasi ottelu, katsot sen loppuun ja myöhästyt lennoltasi.")
-        return
+        print("Olet väsynyt, nukut pommiin ja rangesi tippui nollaan.")
+        return player_range == 0
+    elif tulos == "Bet":
+        print("Hävisit rangesi NPC:lle, sinun rangesi siirty NPC:lle.")
+        return npc_range_1 == npc_range_1 + player_range, player_range == 0
 
 
 def airport_data(icao): #lentokentän tiedot
@@ -231,7 +221,7 @@ while game_running:
             do_run = False
         elif do == 'heita':
             what_happens_options = get_list_function(throw_dice())
-            what_happens(what_happens_options, player_range, current_airport, npc_current_airport, start_airport)
+            what_happens(what_happens_options, player_range, current_airport, npc_range_1, start_airport)
             
             do_run = False
         elif do == 'lenna':
