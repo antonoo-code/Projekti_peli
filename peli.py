@@ -215,15 +215,15 @@ while game_running:
     # kysytään haluuako ladata, heittää noppaa tai lentää laitoin while nii ei tuu väärää kometoa
     do_run = True
     while do_run:
-        print(f'Sinun sijaintisi on: {get_airport_name(current_airport)} matkaa maaliin on: {calculate_distance(current_airport, goal_airport):.0f} kilometriä, sekä sinulla on rangea jäljellä {player_range} kilometriä.') #Anton
+        print(f'Sinun sijaintisi on: {get_airport_name(current_airport)} matkaa maaliin on: {calculate_distance(current_airport, goal_airport):.0f} kilometriä, sekä sinulla on rangea jäljellä {player_range:.0f} kilometriä.') #Anton
         print(f'Möttösen sijainti on: {get_airport_name(npc_current_airport)} ja matkaa maaliin on: {calculate_distance(npc_current_airport, goal_airport):.0f} kilometriä.') #Anton
         
         player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
         if player_flight_options == "None":
             print('Sinulla ei ole rangea lentää minnekkään.')
-            do = input('haluatko ladata (lataa), heittää noppaa(heita): ')
+            do = input('haluatko ladata akun täyteen (lataa), heittää noppaa(heita): ')
         else:
-            do = input('haluatko ladata (lataa), heittää noppaa(heita) tai lentää(lenna): ')
+            do = input('haluatko ladata akun täyteen (lataa), heittää noppaa(heita) tai lentää(lenna): ')
         
         if do == 'lataa':
             print('latasit akun täyteen')
