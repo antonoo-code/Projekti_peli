@@ -108,13 +108,13 @@ def get_list_function(x):
     funktion = penalties[x]
     return funktion
 
-def throw_dice(heita): #noppa
+def throw_dice(): #noppa
     """heittää noppaa 1-6."""
     throw_dice = random.randint(0, 6)
     return throw_dice
 
 # Noppafunktiot Nicke
-def what_happens(tulos, pelaajan_range):
+def what_happens(tulos, player_range, current_airport, npc_current_airport, start_airport, heita):
     """Kertoo mitä millakin nopan silmäluuvulla tapahtuu."""
     if tulos == "Raffle":
         current_airport = update_location
