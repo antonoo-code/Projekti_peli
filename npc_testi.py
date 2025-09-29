@@ -10,7 +10,14 @@ connection = mysql.connector.connect(
     password='sala',
     autocommit=True)
 
-
+def get_start_airports(goal,allports): #haetaan alku lentokenttä.
+    """Funktio listaa kaikista knetistä kentäntät jotka ovat kauimpana maalista joka on generoitu."""
+    start_airport_options = []
+    for airport in allports:
+        range = calculate_distance(airport[0], goal)  
+        start_airport_options.append([airport[0], range])
+    Start_airport_list = sorted(start_airport_options, key=distance_from_airport_distance reverse=True)[:4]
+    return Start_airport_list
 
 
 """def airports():
