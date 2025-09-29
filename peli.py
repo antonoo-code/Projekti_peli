@@ -208,8 +208,7 @@ while game_running:
             tulos = what_happens_options
             """Kertoo mitä millakin nopan silmäluuvulla tapahtuu."""
             if tulos == "Raffle":
-                print(
-                    "Voitit lentokentän pika-arvonnan ja saat uuden lentokoneen käyttöösi, voit jatkaa lentämistä heti.")
+                print("Voitit lentokentän pika-arvonnan ja saat uuden lentokoneen käyttöösi, voit jatkaa lentämistä heti.")
                 player_range = MAX_PLAYER_RANGE
             elif tulos == "President":
                 print("Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle uuden lentokoneen!")
