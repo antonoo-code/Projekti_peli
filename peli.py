@@ -134,6 +134,7 @@ def what_happens(tulos, player_range, current_airport, start_airport, npc_range_
     elif tulos == "Bet":
         print("Hävisit rangesi NPC:lle, sinun rangesi siirty NPC:lle.")
         return npc_range_1 == npc_range_1 + player_range, player_range == 0
+    #moi
 
 
 def airport_data(icao): #lentokentän tiedot
