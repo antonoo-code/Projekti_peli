@@ -230,7 +230,8 @@ while game_running:
             player_range = 600
             do_run = False
         elif do == 'heita':
-            get_list_function(throw_dice())
+            what_happens_options = get_list_function(throw_dice())
+            what_happens(what_happens_options, player_range, current_airport, npc_current_airport, start_airport)
             
             do_run = False
         elif do == 'lenna':
