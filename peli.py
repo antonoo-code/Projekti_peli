@@ -194,7 +194,7 @@ while game_running:
         if player_flight_options == []:
             print('Sinulla ei ole rangea lentää minnekkään.')
             do = input('Haluatko ladata akun täyteen? (lataa), heittää noppaa? (heita): ')
-        if player_range == MAX_PLAYER_RANGE:
+        elif player_range == MAX_PLAYER_RANGE:
             do = input('Haluatko superghargeta akkusi? (super), heittää noppaa? (heita) tai lentää? (lenna): ')
         else:
             do = input('Haluatko ladata akun täyteen? (lataa), heittää noppaa? (heita) tai lentää? (lenna): ')
@@ -228,6 +228,7 @@ while game_running:
         elif do == 'super':
             player_range = player_range + PLAYER_SUPERCHARGE_AMOUNT
             print('Superchargesit koneesi XD')
+            do_run = False
         elif do == 'lenna':
             lenna = True
             while lenna:
