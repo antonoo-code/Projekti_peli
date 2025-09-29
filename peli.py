@@ -5,7 +5,7 @@ import random
 NPC_NUBER_OF_OPTIONS = 6
 GAME_AIRPORT_LIMIT = 100
 NPC_RANGE = 1200
-PLAYER_RANGE = 600
+MAX_PLAYER_RANGE = 600
 NPC_visited_ports = set()
 
 
@@ -196,7 +196,7 @@ npc_current_airport = start_airport
 end_airport = airport_data(goal_airport)
 player_turns = 0
 npc_turns = 0
-player_range = PLAYER_RANGE
+player_range = MAX_PLAYER_RANGE
 npc_range_1 = NPC_RANGE
 print(f'Määränpääsi {end_airport['name']} ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä')
 game_running = True
@@ -222,7 +222,7 @@ while game_running:
         do = str.lower(do)
         if do == 'lataa':
             print('latasit akun täyteen')
-            player_range = PLAYER_RANGE
+            player_range = MAX_PLAYER_RANGE
             do_run = False
         elif do == 'heita':
             what_happens_options = get_list_function(throw_dice())
