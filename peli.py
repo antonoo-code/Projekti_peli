@@ -204,7 +204,7 @@ while game_running:
             player_range = MAX_PLAYER_RANGE
             do_run = False
         elif do == 'heita':
-            what_happens_options = get_list_function(throw_dice())
+            what_happens_options = get_list_function(throw_dice()) #Nickee
             tulos = what_happens_options
             """Kertoo mitä millakin nopan silmäluuvulla tapahtuu."""
             if tulos == "Raffle":
