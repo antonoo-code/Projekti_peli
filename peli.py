@@ -224,7 +224,7 @@ while game_running:
             do = input('haluatko ladata akun täyteen (lataa), heittää noppaa(heita): ')
         else:
             do = input('haluatko ladata akun täyteen (lataa), heittää noppaa(heita) tai lentää(lenna): ')
-        
+        do = str.lower(do)
         if do == 'lataa':
             print('latasit akun täyteen')
             player_range = 600
@@ -240,7 +240,8 @@ while game_running:
                 player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
                 for i in player_flight_options: #Anton
                     print(i)
-                destination = input('Enter destination icao: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
+                destination = input('Syötä lentokentän icao koodi: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
+                destination = str.upper(destination)
                 for option in player_flight_options:
                     if option[1] == destination:
                         selected_distance = calculate_distance(current_airport, destination)
