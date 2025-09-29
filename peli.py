@@ -200,12 +200,13 @@ player_turns = 0
 npc_turns = 0
 player_range = MAX_PLAYER_RANGE
 npc_range_1 = NPC_RANGE
-print(f'Määränpääsi {end_airport['name']} ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä')
+print(f'Määränpääsi {end_airport['name']} ({goal_airport}) ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä') # Rohan
 game_running = True
 while game_running:
-    player_turns = player_turns + 1
+    player_turns += 1
     if npc_current_airport != goal_airport:
-        npc_turns = npc_turns + 1 #todo lisätään vuoroja vaan siihen asti että npc maalissa
+        npc_turns += 1  # Rohan
+    #todo lisätään vuoroja vaan siihen asti että npc maalissa
     airport = airport_data(current_airport)
 
 
@@ -237,6 +238,7 @@ while game_running:
                 player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
                 for i in player_flight_options: #Anton
                     print(i)
+                print(f"Maali on: {end_airport['name']} ({goal_airport})")
                 destination = input('Syötä lentokentän icao koodi: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
                 destination = str.upper(destination)
                 for option in player_flight_options:

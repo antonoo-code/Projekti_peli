@@ -60,3 +60,7 @@ if not player_flight_options:
 # näkyy myös maalilentokenttä ja sen icao koodi, helpotakseen pelajaa.
 elif do == 'lenna':
     print(f"Maali on:", goal_name, goal_airport)
+
+# Siivouksia:
+
+print(f'Määränpääsi {end_airport['name']} ({goal_airport}) ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä') # Rohan
