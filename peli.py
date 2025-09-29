@@ -4,8 +4,8 @@ import random
 
 NPC_NUBER_OF_OPTIONS = 6
 GAME_AIRPORT_LIMIT = 100
-NPC_RANGE = 500
-MAX_PLAYER_RANGE = 600
+NPC_RANGE = 800
+MAX_PLAYER_RANGE = 800
 NPC_SUPERCHARGE_AMOUNT = 300
 NPC_visited_ports = set()
 
@@ -259,7 +259,7 @@ while game_running:
         npc_range_1 = npc_range_1 + NPC_SUPERCHARGE_AMOUNT
         print(f'Möttössellä ei löytynyt kenttiä ranglta ja nyt möttönen alkoi superchargeamaan lentokonettaa XD  {npc_range_1}')
         do_run = False
-    elif npc_range_1 > 500 : #jos npc range yli 500 npc lentää seuraavaavalle kentälle. #Anton  
+    elif npc_range_1 > NPC_RANGE/2 : #jos npc range yli 500 npc lentää seuraavaavalle kentälle. #Anton  
         npc_selected_distance = calculate_distance(npc_current_airport, npc_destination)
         npc_range_1  -= npc_selected_distance
         update_location(npc_destination, npc_range_1)
