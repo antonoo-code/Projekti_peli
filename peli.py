@@ -114,17 +114,17 @@ def throw_dice(): #noppa
     return throw_dice
 
 # Noppafunktiot Nicke
-def what_happens(tulos, player_range, current_airport, start_airport, npc_range_1):
+def what_happens(tulos, player_range, current_airport, start_airport, npc_range_1, PLAYER_RANGE):
     """Kertoo mitä millakin nopan silmäluuvulla tapahtuu."""
     if tulos == "Raffle":
         print("Voitit lentokentän pika-arvonnan ja saat uuden lentokoneen käyttöösi, voit jatkaa lentämistä heti.")
-        return player_range == 600
+        return PLAYER_RANGE == 0
     elif tulos == "President":
         print("Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle uuden lentokoneen!")
-        return player_range == 600
+        return player_range == PLAYER_RANGE
     elif tulos == "Salamanisku":
         print("Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!")
-        return player_range == 800
+        return player_range == PLAYER_RANGE + 200
     elif tulos == "Passi":
         print("Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan.")
         return current_airport == start_airport
