@@ -19,7 +19,7 @@ connection = mysql.connector.connect(
 
 
 def airports(): #haetaan lentokentät mitä käytetään
-    haku = f"SELECT iso_country, ident, name, type, latitude_deg, longitude_deg FROM airport WHERE continent = 'EU' AND type = 'large_airport' limit {GAME_AIRPORT_LIMIT};"
+    haku = f"SELECT iso_country, ident, name, type, latitude_deg, longitude_deg FROM airport WHERE continent = 'EU' AND iso_country NOT IN ('ES', 'PT', 'RU', 'ISL') AND type = 'large_airport' limit {GAME_AIRPORT_LIMIT};"
     sql = (haku)
     """Hakee tietokannasta haltuut lentokentät ja niistä kaikki oleelliset tiedot."""
     cursor = connection.cursor(dictionary = True)
@@ -179,7 +179,7 @@ def get_goal_airports(start,allports): #haetaan alku lentokenttä.
     for airport in allports:
         range = calculate_distance(airport['ident'], start)  
         goal_airport_options.append([airport['ident'], range])
-    goal_airport_options = sorted(goal_airport_options, key=distance_from_airport_distance, reverse=True)[:4]
+    goal_airport_options = sorted(goal_airport_options, key=distance_from_airport_distance, reverse=True)[:10]
     random_index =random.randint(0,len(goal_airport_options)-1)
     random_goal_port = goal_airport_options[random_index]
     goal = random_goal_port[0]
@@ -283,4 +283,3 @@ elif current_airport == goal_airport and npc_current_airport != goal_airport:
     print('Voitit mönttösen onnea!')
 elif current_airport != goal_airport and npc_current_airport == goal_airport:
     print('hävisit yksinkertaiselle tietokone ohjelmalle häpeä!')
-#KKSKSKSK
