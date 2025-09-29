@@ -1,13 +1,13 @@
-
-
 from geopy import distance
 import mysql.connector
 import random
 
 NPC_NUBER_OF_OPTIONS = 6
 GAME_AIRPORT_LIMIT = 100
-NPC_RANGE = 1200
+NPC_RANGE = 500
 MAX_PLAYER_RANGE = 600
+NPC_SUPERCHARGE_AMOUNT = 300
+PLAYER_SUPERCHARGE_AMOUNT = 150
 NPC_visited_ports = set()
 
 
@@ -193,9 +193,11 @@ while game_running:
         player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
         if player_flight_options == []:
             print('Sinulla ei ole rangea lentää minnekkään.')
-            do = input('haluatko ladata akun täyteen (lataa), heittää noppaa(heita): ')
+            do = input('Haluatko ladata akun täyteen? (lataa), heittää noppaa? (heita): ')
+        if player_range == MAX_PLAYER_RANGE:
+            do = input('Haluatko superghargeta akkusi? (super), heittää noppaa? (heita) tai lentää? (lenna): ')
         else:
-            do = input('haluatko ladata akun täyteen (lataa), heittää noppaa(heita) tai lentää(lenna): ')
+            do = input('Haluatko ladata akun täyteen? (lataa), heittää noppaa? (heita) tai lentää? (lenna): ')
         do = str.lower(do)
         if do == 'lataa':
             print('latasit akun täyteen')
@@ -223,6 +225,9 @@ while game_running:
                 player_range = 0
             
             do_run = False
+        elif do == 'super':
+            player_range = player_range + PLAYER_SUPERCHARGE_AMOUNT
+            print('Superchargesit koneesi XD')
         elif do == 'lenna':
             lenna = True
             while lenna:
@@ -248,10 +253,10 @@ while game_running:
     
     npc_destination = main_npc_flight_fuunction(npc_current_airport,all_airports, npc_range_1, goal_airport)
     if npc_destination == None:
-        npc_range_1 = npc_range_1 + 500
+        npc_range_1 = npc_range_1 + NPC_SUPERCHARGE_AMOUNT
         print(f'Möttössellä ei löytynyt kenttiä ranglta ja nyt möttönen alkoi superchargeamaan lentokonettaa XD  {npc_range_1}')
         do_run = False
-    elif npc_range_1 > 500 : #jos npc range yli 500 npc lentää seuraavaavalle kentälle. #Anton  
+    elif npc_range_1 > NPC_RANGE/2 : #jos npc range yli 500 npc lentää seuraavaavalle kentälle. #Anton
         npc_selected_distance = calculate_distance(npc_current_airport, npc_destination)
         npc_range_1  -= npc_selected_distance
         update_location(npc_destination, npc_range_1)
