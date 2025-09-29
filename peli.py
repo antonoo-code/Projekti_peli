@@ -108,7 +108,7 @@ def get_airport_name(icao): #Anton
 
 def get_list_function(x):   
     """Syötetään x paikalle nopan saatu silmäluku ja funktio kertoo mikä tapahtuuma siitä tulee."""
-    penalties = ["Salamanisku", "Passi", "President", "Fatigue", "Bet", "Raffle"]
+    penalties = ["Salamanisku", "Passi", "President", "Fatigue", "Raffle"]
     funktion = penalties[x]
     return funktion
 
