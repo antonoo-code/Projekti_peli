@@ -1,3 +1,5 @@
+
+
 from geopy import distance
 import mysql.connector
 import random
@@ -112,34 +114,8 @@ def get_list_function(x):
 
 def throw_dice(): #noppa
     """heittää noppaa 1-6."""
-    throw_dice = random.randint(0, 6)
+    throw_dice = random.randint(0, 4)
     return throw_dice
-
-# Noppafunktiot Nicke
-def what_happens(tulos, player_range, current_airport, start_airport, npc_range_1, PLAYER_RANGE):
-    """Kertoo mitä millakin nopan silmäluuvulla tapahtuu."""
-    if tulos == "Raffle":
-        current_airport = update_location
-        print("Voitit lentokentän pika-arvonnan ja saat uuden lentokoneen käyttöösi, voit jatkaa lentämistä heti.")
-        return PLAYER_RANGE == 0
-    elif tulos == "President":
-        print("Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle uuden lentokoneen!")
-        return player_range == PLAYER_RANGE
-    elif tulos == "Salamanisku":
-        player_range = 800
-        print("Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!")
-        return player_range == PLAYER_RANGE + 200
-    elif tulos == "Passi":
-        current_airport = start_airport
-        print("Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan.")
-        return current_airport == start_airport
-    elif tulos == "Fatigue":
-        print("Olet väsynyt, nukut pommiin ja rangesi tippui nollaan.")
-        return player_range == 0
-    elif tulos == "Bet":
-        print("Hävisit rangesi NPC:lle, sinun rangesi siirty NPC:lle.")
-        return npc_range_1 == npc_range_1 + player_range, player_range == 0
-    #moi
 
 
 def airport_data(icao): #lentokentän tiedot
@@ -227,7 +203,24 @@ while game_running:
             do_run = False
         elif do == 'heita':
             what_happens_options = get_list_function(throw_dice())
-            what_happens(what_happens_options, player_range, current_airport, npc_current_airport, start_airport)
+            tulos = what_happens_options
+            """Kertoo mitä millakin nopan silmäluuvulla tapahtuu."""
+            if tulos == "Raffle":
+                print(
+                    "Voitit lentokentän pika-arvonnan ja saat uuden lentokoneen käyttöösi, voit jatkaa lentämistä heti.")
+                player_range = MAX_PLAYER_RANGE
+            elif tulos == "President":
+                print("Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle uuden lentokoneen!")
+                player_range = MAX_PLAYER_RANGE
+            elif tulos == "Salamanisku":
+                print("Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!")
+                player_range = MAX_PLAYER_RANGE + 200
+            elif tulos == "Passi":
+                print("Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan.")
+                current_airport = start_airport
+            elif tulos == "Fatigue":
+                print("Olet väsynyt, nukut pommiin ja rangesi tippui nollaan.")
+                player_range = 0
             
             do_run = False
         elif do == 'lenna':
