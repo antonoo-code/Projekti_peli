@@ -4,9 +4,10 @@ import random
 
 NPC_NUBER_OF_OPTIONS = 6
 GAME_AIRPORT_LIMIT = 100
-NPC_RANGE = 800
-MAX_PLAYER_RANGE = 800
+NPC_RANGE = 500
+MAX_PLAYER_RANGE = 600
 NPC_SUPERCHARGE_AMOUNT = 300
+PLAYER_SUPERCHARGE_AMOUNT = 150
 NPC_visited_ports = set()
 
 
@@ -107,40 +108,14 @@ def get_airport_name(icao): #Anton
 
 def get_list_function(x):   
     """Syötetään x paikalle nopan saatu silmäluku ja funktio kertoo mikä tapahtuuma siitä tulee."""
-    penalties = ["Salamanisku", "Passi", "President", "Fatigue", "Bet", "Raffle"]
+    penalties = ["Salamanisku", "Passi", "President", "Fatigue", "Raffle"]
     funktion = penalties[x]
     return funktion
 
 def throw_dice(): #noppa
     """heittää noppaa 1-6."""
-    throw_dice = random.randint(0, 6)
+    throw_dice = random.randint(0, 4)
     return throw_dice
-
-# Noppafunktiot Nicke
-def what_happens(tulos, player_range, current_airport, start_airport, npc_range_1, PLAYER_RANGE):
-    """Kertoo mitä millakin nopan silmäluuvulla tapahtuu."""
-    if tulos == "Raffle":
-        current_airport = update_location
-        print("Voitit lentokentän pika-arvonnan ja saat uuden lentokoneen käyttöösi, voit jatkaa lentämistä heti.")
-        return PLAYER_RANGE == 0
-    elif tulos == "President":
-        print("Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle uuden lentokoneen!")
-        return player_range == PLAYER_RANGE
-    elif tulos == "Salamanisku":
-        player_range = 800
-        print("Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!")
-        return player_range == PLAYER_RANGE + 200
-    elif tulos == "Passi":
-        current_airport = start_airport
-        print("Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan.")
-        return current_airport == start_airport
-    elif tulos == "Fatigue":
-        print("Olet väsynyt, nukut pommiin ja rangesi tippui nollaan.")
-        return player_range == 0
-    elif tulos == "Bet":
-        print("Hävisit rangesi NPC:lle, sinun rangesi siirty NPC:lle.")
-        return npc_range_1 == npc_range_1 + player_range, player_range == 0
-    #moi
 
 
 def airport_data(icao): #lentokentän tiedot
@@ -215,22 +190,45 @@ while game_running:
     while do_run:
         print(f'Sinun sijaintisi on: {get_airport_name(current_airport)} matkaa maaliin on: {calculate_distance(current_airport, goal_airport):.0f} kilometriä, sekä sinulla on rangea jäljellä {player_range:.0f} kilometriä.') #Anton
         print(f'Möttösen sijainti on: {get_airport_name(npc_current_airport)} ja matkaa maaliin on: {calculate_distance(npc_current_airport, goal_airport):.0f} kilometriä.') #Anton
-        
+        if calculate_distance(npc_current_airport, goal_airport)+200 < calculate_distance(current_airport, goal_airport):
+            print('Möttönen lähetti sinulle viestin: Missä kaveri hinaa XDD')
         player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
         if player_flight_options == []:
             print('Sinulla ei ole rangea lentää minnekkään.')
-            do = input('haluatko ladata akun täyteen (lataa), heittää noppaa(heita): ')
+            do = input('Haluatko ladata akun täyteen? (lataa), heittää noppaa? (heita): ')
+        elif player_range == MAX_PLAYER_RANGE:
+            do = input('Haluatko superghargeta akkusi? (super), heittää noppaa? (heita) tai lentää? (lenna): ')
         else:
-            do = input('haluatko ladata akun täyteen (lataa), heittää noppaa(heita) tai lentää(lenna): ')
+            do = input('Haluatko ladata akun täyteen? (lataa), heittää noppaa? (heita) tai lentää? (lenna): ')
         do = str.lower(do)
         if do == 'lataa':
             print('latasit akun täyteen')
             player_range = MAX_PLAYER_RANGE
             do_run = False
         elif do == 'heita':
-            what_happens_options = get_list_function(throw_dice())
-            what_happens(what_happens_options, player_range, current_airport, npc_current_airport, start_airport)
+            what_happens_options = get_list_function(throw_dice()) #Nickee
+            tulos = what_happens_options
+            """Kertoo mitä millakin nopan silmäluuvulla tapahtuu."""
+            if tulos == "Raffle":
+                print("Voitit lentokentän pika-arvonnan ja saat uuden lentokoneen käyttöösi, voit jatkaa lentämistä heti.")
+                player_range = MAX_PLAYER_RANGE
+            elif tulos == "President":
+                print("Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle uuden lentokoneen!")
+                player_range = MAX_PLAYER_RANGE
+            elif tulos == "Salamanisku":
+                print("Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!")
+                player_range = MAX_PLAYER_RANGE + 200
+            elif tulos == "Passi":
+                print("Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan.")
+                current_airport = start_airport
+            elif tulos == "Fatigue":
+                print("Olet väsynyt, nukut pommiin ja rangesi tippui nollaan.")
+                player_range = 0
             
+            do_run = False
+        elif do == 'super':
+            player_range = player_range + PLAYER_SUPERCHARGE_AMOUNT
+            print('Superchargesit koneesi XD')
             do_run = False
         elif do == 'lenna':
             lenna = True
@@ -261,7 +259,7 @@ while game_running:
         npc_range_1 = npc_range_1 + NPC_SUPERCHARGE_AMOUNT
         print(f'Möttössellä ei löytynyt kenttiä ranglta ja nyt möttönen alkoi superchargeamaan lentokonettaa XD  {npc_range_1}')
         do_run = False
-    elif npc_range_1 > 500 : #jos npc range yli 500 npc lentää seuraavaavalle kentälle. #Anton  
+    elif npc_range_1 > NPC_RANGE/2 : #jos npc range yli 500 npc lentää seuraavaavalle kentälle. #Anton
         npc_selected_distance = calculate_distance(npc_current_airport, npc_destination)
         npc_range_1  -= npc_selected_distance
         update_location(npc_destination, npc_range_1)
