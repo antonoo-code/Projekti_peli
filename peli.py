@@ -275,9 +275,9 @@ while game_running:
         game_running = False
 
 
-if player_turns == npc_turns:
-    print('tasapeli')
-elif player_turns > npc_turns:
-    print('voitit')
-elif player_turns < npc_turns:
-    print('hävisit')
+if current_airport == goal_airport and npc_current_airport == goal_airport:
+    print('Voi hemmetti tuli tasapeli!')
+elif current_airport == goal_airport and npc_current_airport != goal_airport:
+    print('Voitit mönttösen onnea!')
+elif current_airport != goal_airport and npc_current_airport == goal_airport:
+    print('hävisit yksinkertaiselle tietokone ohjelmalle häpeä!')
