@@ -6,6 +6,7 @@ NPC_NUBER_OF_OPTIONS = 6
 GAME_AIRPORT_LIMIT = 100
 NPC_RANGE = 1200
 MAX_PLAYER_RANGE = 600
+NPC_SUPERCHARGE_AMOUNT = 300
 NPC_visited_ports = set()
 
 
@@ -255,7 +256,7 @@ while game_running:
     
     npc_destination = main_npc_flight_fuunction(npc_current_airport,all_airports, npc_range_1, goal_airport)
     if npc_destination == None:
-        npc_range_1 = npc_range_1 + 500
+        npc_range_1 = npc_range_1 + NPC_SUPERCHARGE_AMOUNT
         print(f'Möttössellä ei löytynyt kenttiä ranglta ja nyt möttönen alkoi superchargeamaan lentokonettaa XD  {npc_range_1}')
         do_run = False
     elif npc_range_1 > 500 : #jos npc range yli 500 npc lentää seuraavaavalle kentälle. #Anton  
