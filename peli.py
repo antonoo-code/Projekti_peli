@@ -5,7 +5,7 @@ import random
 NPC_NUBER_OF_OPTIONS = 3
 GAME_AIRPORT_LIMIT = 100
 NPC_RANGE = 1200
-
+PLAYER_RANGE = 600
 NPC_visited_ports = set()
 
 
@@ -201,7 +201,7 @@ npc_current_airport = start_airport
 end_airport = airport_data(goal_airport)
 player_turns = 0
 npc_turns = 0
-player_range = 600
+player_range = PLAYER_RANGE
 npc_range_1 = NPC_RANGE
 print(f'Määränpääsi {end_airport['name']} ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä')
 game_running = True
@@ -219,7 +219,7 @@ while game_running:
         print(f'Möttösen sijainti on: {get_airport_name(npc_current_airport)} ja matkaa maaliin on: {calculate_distance(npc_current_airport, goal_airport):.0f} kilometriä.') #Anton
         
         player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
-        if player_flight_options == "None":
+        if player_flight_options == []:
             print('Sinulla ei ole rangea lentää minnekkään.')
             do = input('haluatko ladata akun täyteen (lataa), heittää noppaa(heita): ')
         else:
@@ -227,7 +227,7 @@ while game_running:
         do = str.lower(do)
         if do == 'lataa':
             print('latasit akun täyteen')
-            player_range = 600
+            player_range = PLAYER_RANGE
             do_run = False
         elif do == 'heita':
             what_happens_options = get_list_function(throw_dice())
