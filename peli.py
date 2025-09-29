@@ -215,8 +215,8 @@ while game_running:
     # kysytään haluuako ladata, heittää noppaa tai lentää laitoin while nii ei tuu väärää kometoa
     do_run = True
     while do_run:
-        print(f'Sinun sijaintisi on: {get_airport_name(current_airport)} matkaa maaliin on: {calculate_distance(current_airport, goal_airport)} kilometriä, sekä sinulla on rangea jäljellä {player_range} kilometriä.') #Anton
-        print(f'Möttösen sijainti on: {get_airport_name(npc_current_airport)} ja matkaa maaliin on: {calculate_distance(npc_current_airport, goal_airport)} kilometriä.') #Anton
+        print(f'Sinun sijaintisi on: {get_airport_name(current_airport)} matkaa maaliin on: {calculate_distance(current_airport, goal_airport):.0f} kilometriä, sekä sinulla on rangea jäljellä {player_range} kilometriä.') #Anton
+        print(f'Möttösen sijainti on: {get_airport_name(npc_current_airport)} ja matkaa maaliin on: {calculate_distance(npc_current_airport, goal_airport):.0f} kilometriä.') #Anton
         
         player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
         if player_flight_options == "None":
