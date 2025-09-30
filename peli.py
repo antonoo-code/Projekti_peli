@@ -234,6 +234,7 @@ while game_running:
                 print("Olet väsynyt, nukut pommiin ja rangesi tippui nollaan.")
                 player_range = 0
             
+            
             do_run = False
         elif do == 'super':
             player_range = player_range + PLAYER_SUPERCHARGE_AMOUNT
