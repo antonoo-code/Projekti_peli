@@ -46,3 +46,6 @@ def update_location(icao, p_range): #lokaation muutos pelissä
 print(f'{airport_data(goal_airport)}')
 
 
+
+
+
