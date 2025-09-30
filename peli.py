@@ -204,7 +204,7 @@ while game_running:
         player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
         if player_flight_options == []:
             print('Sinulla ei ole rangea lentää minnekkään.')
-            do = input('Haluatko ladata akun täyteen? (lataa), heittää noppaa? (heita): ')
+            do = input(f'Haluatko ladata akun täyteen? ({BOLD}lataa{RESET}), heittää noppaa? (heita): ')
         elif player_range == MAX_PLAYER_RANGE:
             do = input('Haluatko superghargeta akkusi? (super), heittää noppaa? (heita) tai lentää? (lenna): ')
         else:
@@ -267,7 +267,7 @@ while game_running:
     npc_destination = main_npc_flight_fuunction(npc_current_airport,all_airports, npc_range_1, goal_airport)
     if npc_destination == None:
         npc_range_1 = npc_range_1 + NPC_SUPERCHARGE_AMOUNT
-        print(f'Möttössellä ei löytynyt kenttiä ranglta ja nyt möttönen alkoi superchargeamaan lentokonettaa XD  {npc_range_1}')
+        print(f'{YELLOW}Möttönen alkoi superchargeamaan lentokonettaa XD{RESET} ')
         do_run = False
     elif npc_range_1 > NPC_RANGE/2 : #jos npc range yli 500 npc lentää seuraavaavalle kentälle. #Anton
         npc_selected_distance = calculate_distance(npc_current_airport, npc_destination)
