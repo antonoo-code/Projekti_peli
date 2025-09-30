@@ -61,6 +61,8 @@ if not player_flight_options:
 elif do == 'lenna':
     print(f"Maali on: {end_airport['name']} ({goal_airport})")
 
+    #Bob
+
 # Siivouksia:
 
 print(f'Määränpääsi {end_airport['name']} ({goal_airport}) ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä') # Rohan
