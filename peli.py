@@ -204,11 +204,11 @@ while game_running:
         player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
         if player_flight_options == []:
             print('Sinulla ei ole rangea lentää minnekkään.')
-            do = input(f'Haluatko ladata akun täyteen? ({BOLD}lataa{RESET}), heittää noppaa? (heita): ')
+            do = input(f'Haluatko ladata akun täyteen? ({BLUE}lataa{RESET}), heittää noppaa? ({BLUE}heita{RESET}): ')
         elif player_range == MAX_PLAYER_RANGE:
-            do = input('Haluatko superghargeta akkusi? (super), heittää noppaa? (heita) tai lentää? (lenna): ')
+            do = input(f'Haluatko superghargeta akkusi? ({BLUE}super{RESET}), heittää noppaa? ({BLUE}heita{RESET}) tai lentää? ({BLUE}lenna{RESET}): ')
         else:
-            do = input('Haluatko ladata akun täyteen? (lataa), heittää noppaa? (heita) tai lentää? (lenna): ')
+            do = input(f'Haluatko ladata akun täyteen? ({BLUE}lataa{RESET}), heittää noppaa? ({BLUE}heita{RESET}) tai lentää? ({BLUE}lenna{RESET}): ')
         do = str.lower(do)
         if do == 'lataa':
             print('latasit akun täyteen')
@@ -238,7 +238,7 @@ while game_running:
             do_run = False
         elif do == 'super':
             player_range = player_range + PLAYER_SUPERCHARGE_AMOUNT
-            print('Superchargesit koneesi XD')
+            print(f'Superchargesit koneesi XD sait {PLAYER_SUPERCHARGE_AMOUNT}km rangea lisää.')
             do_run = False
         elif do == 'lenna':
             lenna = True
