@@ -59,7 +59,7 @@ if not player_flight_options:
 # 186 - 187 rivi, joka kerta ku valitsee lentokohteen, niin
 # näkyy myös maalilentokenttä ja sen icao koodi, helpotakseen pelajaa.
 elif do == 'lenna':
-    print(f"Maali on:", goal_name, goal_airport)
+    print(f"Maali on: {end_airport['name']} ({goal_airport})")
 
 # Siivouksia:
 
