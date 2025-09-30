@@ -60,7 +60,6 @@ def get_npc_destination_icao(npc_flight_options, goal): #Anton
         return None
     for airport in npc_flight_options:
         if airport[0] == goal:
-            print(f'flight of victory')
             return goal #npc maalissa.
     if len(npc_flight_options)> 1:
         random_index =random.randint(0,len(npc_flight_options)-1)
