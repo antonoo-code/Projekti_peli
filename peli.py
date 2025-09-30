@@ -162,7 +162,6 @@ start_num = random.randint(0,len(all_airports)-1)
 
 start_airport = all_airports[start_num]['ident']
 goal_airport =  get_goal_airports(start_airport, all_airports)
-print(goal_airport)
 
 
 current_airport = start_airport
@@ -172,7 +171,7 @@ player_turns = 0
 npc_turns = 0
 player_range = MAX_PLAYER_RANGE
 npc_range_1 = NPC_RANGE
-print(f'Määränpääsi {end_airport['name']} ({goal_airport}) ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä') # Rohan
+print(f'Määränpääsi {end_airport['name']}, {"\033[34m"}{goal_airport}{"\033[0m"} ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä')
 game_running = True
 while game_running:
     player_turns += 1
