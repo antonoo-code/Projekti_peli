@@ -140,7 +140,6 @@ def main_npc_flight_fuunction(current_location,all_ports, npcrange, goalport): #
     destination = get_npc_destination_icao(npc_connective_flight_options, goalport)
     if destination != None:
         NPC_visited_ports.add(destination)
-    print(destination)
     return destination
 
 def get_goal_airports(start,allports): #haetaan alku lentokenttä.
