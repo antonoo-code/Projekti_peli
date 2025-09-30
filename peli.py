@@ -245,8 +245,8 @@ while game_running:
             while lenna:
                 player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
                 for i in player_flight_options: #Anton
-                    print(f'{i[0]}, {BLUE}{i[1]}{RESET}, {i[2]}')
-                print(f"{GREEN} Maali on: {end_airport['name']} ({goal_airport}){RESET}")
+                    print(f'{i[0]:<42}, {BLUE}{i[1]}{RESET}, {i[2]}km')
+                print(f"{GREEN}Maali on: {end_airport['name']} ({goal_airport}){RESET}")
                 destination = input(f'Syötä lentokentän {BLUE}ICAO{RESET} koodi: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
                 destination = str.upper(destination)
                 for option in player_flight_options:
