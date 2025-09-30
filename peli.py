@@ -192,7 +192,7 @@ while game_running:
     # kysytään haluuako ladata, heittää noppaa tai lentää laitoin while nii ei tuu väärää kometoa
     do_run = True
     while do_run:
-        if current_airport in NPC_visited_ports:   
+        if current_airport in NPC_visited_ports:
             print(f'{RED} Möttönen havaitsi jonkun romulentokoneen, seuraavan häntä. {RESET}')
             print(f' {YELLOW}Möttönen lähetti viestin: yritäppäs nyt seurata XD{RESET}')
             print(f'Sinun sijaintisi on: {get_airport_name(current_airport)} matkaa maaliin on: {calculate_distance(current_airport, goal_airport):.0f} kilometriä, sekä sinulla on rangea jäljellä {player_range:.0f} kilometriä.') #Anton
@@ -245,7 +245,7 @@ while game_running:
             while lenna:
                 player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
                 for i in player_flight_options: #Anton
-                    print(i)
+                    print(f'{i[0]}, {BLUE}{i[1]}{RESET}, {i[2]}')
                 print(f"{GREEN} Maali on: {end_airport['name']} ({goal_airport}){RESET}")
                 destination = input(f'Syötä lentokentän {BLUE}ICAO{RESET} koodi: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
                 destination = str.upper(destination)
