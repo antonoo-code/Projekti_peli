@@ -10,6 +10,14 @@ NPC_SUPERCHARGE_AMOUNT = 300
 PLAYER_SUPERCHARGE_AMOUNT = 150
 NPC_visited_ports = set()
 
+#Terminaalin värjäys
+
+RESET = "\033[0m"
+RED = "\033[31m"
+GREEN = "\033[32m"
+YELLOW = "\033[33m"
+BLUE = "\033[34m"
+BOLD = "\033[1m"
 
 connection = mysql.connector.connect(
     port=3306, #oletusarvo ei pakollinen.
@@ -171,7 +179,7 @@ player_turns = 0
 npc_turns = 0
 player_range = MAX_PLAYER_RANGE
 npc_range_1 = NPC_RANGE
-print(f'Määränpääsi {end_airport['name']}, {"\033[34m"}{goal_airport}{"\033[0m"} ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä')
+print(f'Määränpääsi {end_airport['name']}, {BLUE}{goal_airport}{RESET} ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä')
 game_running = True
 while game_running:
     player_turns += 1
@@ -184,10 +192,15 @@ while game_running:
     # kysytään haluuako ladata, heittää noppaa tai lentää laitoin while nii ei tuu väärää kometoa
     do_run = True
     while do_run:
-        print(f'Sinun sijaintisi on: {get_airport_name(current_airport)} matkaa maaliin on: {calculate_distance(current_airport, goal_airport):.0f} kilometriä, sekä sinulla on rangea jäljellä {player_range:.0f} kilometriä.') #Anton
-        print(f'Möttösen sijainti on: {get_airport_name(npc_current_airport)} ja matkaa maaliin on: {calculate_distance(npc_current_airport, goal_airport):.0f} kilometriä.') #Anton
+        if current_airport in NPC_visited_ports:
+            print(f'{RED} Möttönen havaitsi jonkun romulentokoneen, seuraavan häntä. {RESET}')
+            print(f' {YELLOW}Möttönen lähetti viestin: yritäppäs nyt seurata XD{RESET}')
+            print(f'Sinun sijaintisi on: {get_airport_name(current_airport)} matkaa maaliin on: {calculate_distance(current_airport, goal_airport):.0f} kilometriä, sekä sinulla on rangea jäljellä {player_range:.0f} kilometriä.') #Anton
+        else:
+            print(f'Sinun sijaintisi on: {get_airport_name(current_airport)} matkaa maaliin on: {calculate_distance(current_airport, goal_airport):.0f} kilometriä, sekä sinulla on rangea jäljellä {player_range:.0f} kilometriä.')
+            print(f'Möttösen sijainti on: {get_airport_name(npc_current_airport)} ja matkaa maaliin on: {calculate_distance(npc_current_airport, goal_airport):.0f} kilometriä.') #Anton
         if calculate_distance(npc_current_airport, goal_airport)+200 < calculate_distance(current_airport, goal_airport):
-            print('Möttönen lähetti sinulle viestin: Missä kaveri hinaa XDD')
+            print(f' {YELLOW}Möttönen lähetti sinulle viestin: Missä kaveri hinaa XDD {RESET}')
         player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
         if player_flight_options == []:
             print('Sinulla ei ole rangea lentää minnekkään.')
@@ -231,9 +244,9 @@ while game_running:
             while lenna:
                 player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
                 for i in player_flight_options: #Anton
-                    print(f'{i[0]}, {blue}{i[1]}{reset}, {i[2]}')
-                print(f"Maali on: {end_airport['name']} ({goal_airport})")
-                destination = input('Syötä lentokentän icao koodi: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
+                    print(i)
+                print(f"{GREEN} Maali on: {end_airport['name']} ({goal_airport}){RESET}")
+                destination = input(f'Syötä lentokentän {BLUE}ICAO{RESET} koodi: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
                 destination = str.upper(destination)
                 for option in player_flight_options:
                     if option[1] == destination:
