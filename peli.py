@@ -50,7 +50,6 @@ def get_npc_destination_icao(npc_flight_options, goal): #Anton
     """Tää funktio palauttaa npc-pelaajan lehtovaihtoehdoista satunnaisesti yhden kentän icao-koodin"""
     if len(npc_flight_options) == 0:
         return None
-    print(f'debg{npc_flight_options}')
     for airport in npc_flight_options:
         if airport[0] == goal:
             print(f'flight of victory')
@@ -138,7 +137,6 @@ def main_npc_flight_fuunction(current_location,all_ports, npcrange, goalport): #
     """Tärkein funktio laskee mille kentälle npc liikkuu seuraavaksi."""
     npc_airport_range = npc_airport_range_calc(current_location, all_ports, npcrange)
     npc_connective_flight_options = get_npc_connective_flight_options(npc_airport_range, npc_current_airport, goalport)
-    print(f' vaihtoehdot {npc_connective_flight_options}')
     destination = get_npc_destination_icao(npc_connective_flight_options, goalport)
     if destination != None:
         NPC_visited_ports.add(destination)
