@@ -1,5 +1,5 @@
 import textwrap
-GOLD = "\033[38;5;220m"
+GOLD = "\033[38;5;221m"
 ITALIC = "\033[3m"
 RESET = "\033[0m"
 
