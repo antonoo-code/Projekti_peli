@@ -235,7 +235,7 @@ while game_running:
                         f'{YELLOW}Möttönen soitti ja haukkui sinua: Oho, näyttää siltä että jäit jumiin nössö!{RESET}',
                         f'{YELLOW}Möttönen soitti ja solvasi sinua: Kaveri onko kaikki hyvin?, olet hidas kuin etana{RESET}',
                         f'{YELLOW}Möttönen lähetti tekstarin: Kaveri on huitsin nevadassa{RESET}']
-            print(random.choice(messages))
+            print(random.choice(messages)) # Rohan # Lisää möttösen trash talkia ja valitsee randomisti minkä viestin kertoo.
         player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
         if player_flight_options == []:
             print('Sinulla ei ole rangea lentää minnekkään.')
@@ -294,7 +294,7 @@ while game_running:
                 if destination == '':
                     print("Okei, takaisin sitten!")
                     lenna = False
-                    break # Rohan
+                    break # Rohan # lenna valikossa, pystyt mennä takaisin edelliseen valikkoon.
                 destination = str.upper(destination)
                 for option in player_flight_options:
                     if option[1] == destination:
