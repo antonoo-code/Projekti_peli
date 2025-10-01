@@ -191,7 +191,7 @@ if storyDialog == "joo":
 #vaikeustason päättäminen
 difficulty_running = True
 while difficulty_running:
-    difficulty = input(f'Millä vaikeustasolla haluat pelata? ({BLUE}helppo{RESET}) ({BLUE}keski{RESET}) ({BLUE}vaikea{RESET}): ')
+    difficulty = input(f'Millä vaikeustasolla haluat pelata? ({BLUE}helppo{RESET}) ({BLUE}keski{RESET}) ({BLUE}vaikea{RESET}), ({RED}MAHDOTON{RESET}): ')
     print('')
     difficulty = str.lower(difficulty)
     if difficulty == 'helppo':
@@ -207,6 +207,11 @@ while difficulty_running:
         print('Valitsit vaikean vaikeustason!\n')
         print(f'{YELLOW}Viesti möttöseltä: Oho äijä uskaltaa pelata!{RESET}')
         NPC_RANGE = NPC_RANGE + 600
+        difficulty_running = False
+    elif difficulty == 'mahdoton':
+        print('Valitsit mahdottoman vaikeustason!\n')
+        print(f'{YELLOW}Viesti möttöseltä: NT CHATTII LOL!{RESET}')
+        NPC_RANGE = NPC_RANGE + 2000
         difficulty_running = False
     else:
         print('Kirjoitit komennon väärin!!')
@@ -347,6 +352,10 @@ if current_airport == goal_airport and npc_current_airport == goal_airport:
     print('Voi hemmetti tuli tasapeli!')
 elif current_airport == goal_airport and npc_current_airport != goal_airport:
     print('Voitit Möttösen onnea!')
+elif current_airport != goal_airport and npc_current_airport == goal_airport and difficulty == 'mahdoton':
+    print('Hävisit pelin XD')
+    print(f'{YELLOW}Möttönen lähetti viestin: Siin tai lukee mahdoton XD{RESET}')
 elif current_airport != goal_airport and npc_current_airport == goal_airport:
-    print('hävisit yksinkertaiselle tietokone ohjelmalle häpeä!')
+    print('Hävisit yksinkertaiselle tietokone ohjelmalle häpeä!')
+    print(f'{YELLOW}Möttönen lähetti viestin: Ompa vaikee pewi XD{RESET}')
 #KKSKSKSK #Hello
