@@ -200,7 +200,7 @@ while difficulty_running:
         NPC_RANGE = 800
         difficulty_running = False
     else:
-        print('kirjoitit komennon väärin')
+        print('Kirjoitit komennon väärin!!')
 
 print(f'Määränpääsi {end_airport['name']}, {BLUE}{goal_airport}{RESET} ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä')
 game_running = True
