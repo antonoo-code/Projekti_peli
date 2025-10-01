@@ -181,19 +181,20 @@ npc_turns = 0
 player_range = MAX_PLAYER_RANGE
 npc_range_1 = NPC_RANGE
 
-#vaikeustason päättäminen
+
 storyDialog = input("Haluatko kuulla tarinan kisasta? (joo/ei): ")
 if storyDialog == "joo":
     for line in tarina.story():
         print(line)
+#vaikeustason päättäminen
 difficulty_running = True
 while difficulty_running:
     difficulty = input('Millä vaikeustasolla haluat pelata? (helppo) (keski) (vaikea): ')
     print('')
     difficulty = str.lower(difficulty)
     if difficulty == 'helppo':
-        print('Valitsit helpon vaikeustason!')
-        print(f'{YELLOW}Viesti möttöseltä: NÖSSÖ{RESET}\n')
+        print('Valitsit helpon vaikeustason!\n')
+        print(f'{YELLOW}Viesti möttöseltä: NÖSSÖ{RESET}')
         NPC_RANGE = 400
         difficulty_running = False
     elif difficulty == 'keski':
