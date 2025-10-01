@@ -228,8 +228,13 @@ while game_running:
         else:
             print(f'{GREEN}Sinun sijaintisi on: {RESET} {get_airport_name(current_airport)} matkaa maaliin on: {calculate_distance(current_airport, goal_airport):.0f} kilometriä, sekä sinulla on rangea jäljellä {player_range:.0f} kilometriä.')
             print(f'{YELLOW}Möttösen sijainti on:{RESET} {get_airport_name(npc_current_airport)} ja matkaa maaliin on: {calculate_distance(npc_current_airport, goal_airport):.0f} kilometriä.') #Anton
-        if calculate_distance(npc_current_airport, goal_airport)+200 < calculate_distance(current_airport, goal_airport):
-            print(f'{YELLOW}Möttönen lähetti sinulle viestin: Missä kaveri hinaa XDD {RESET}')
+        if calculate_distance(npc_current_airport, goal_airport) + 200 < calculate_distance(current_airport, goal_airport):
+            messages = [f'{YELLOW}Möttönen lähetti sinulle viestin: Missä kaveri hinaa XDD{RESET}',
+                        f'{YELLOW}Sait Möttöseltä postia: Hei kaveri tarvitsetko kartan?{RESET}',
+                        f'{YELLOW}Möttönen soitti ja haukkui sinua: Oho, näyttää siltä että jäit jumiin nössö!{RESET}',
+                        f'{YELLOW}Möttönen soitti ja solvasi sinua: Kaveri onko kaikki hyvin?, olet hidas kuin etana{RESET}',
+                        f'{YELLOW}Möttönen lähetti tekstarin: Kaveri on huitsin nevadassa{RESET}']
+            print(random.choice(messages))
         player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
         if player_flight_options == []:
             print('Sinulla ei ole rangea lentää minnekkään.')
