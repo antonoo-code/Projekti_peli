@@ -204,10 +204,13 @@ while game_running:
         if player_flight_options == []:
             print('Sinulla ei ole rangea lentää minnekkään.')
             do = input(f'Haluatko ladata akun täyteen? ({BLUE}Lataa{RESET}), heittää noppaa? ({BLUE}Heita{RESET}): ')
+            print('')
         elif player_range == MAX_PLAYER_RANGE:
             do = input(f'Haluatko superghargeta akkusi? ({BLUE}Super{RESET}), heittää noppaa? ({BLUE}Heita{RESET}) tai lentää? ({BLUE}Lenna{RESET}): ')
+            print('')
         else:
             do = input(f'Haluatko ladata akun täyteen? ({BLUE}Lataa{RESET}), heittää noppaa? ({BLUE}Heita{RESET}) tai lentää? ({BLUE}Lenna{RESET}): ')
+            print('')
         do = str.lower(do)
         if do == 'lataa':
             print('latasit akun täyteen')
@@ -247,6 +250,7 @@ while game_running:
                     print(f'{i[0]:<42}, {BLUE}{i[1]}{RESET}, {i[2]}km')
                 print(f"{GREEN}Maali on: {end_airport['name']} ({goal_airport}){RESET}")
                 destination = input(f'Syötä lentokentän {BLUE}ICAO{RESET} koodi: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
+                print('')
                 destination = str.upper(destination)
                 for option in player_flight_options:
                     if option[1] == destination:
