@@ -290,7 +290,10 @@ while game_running:
                     print(f'{i[0]:<42}, {BLUE}{i[1]}{RESET}, {i[2]}km')
                 print(f"{GREEN}Maali on: {end_airport['name']} ({goal_airport}){RESET}")
                 destination = input(f'Syötä lentokentän {BLUE}ICAO{RESET} koodi: ') #liikutaan seuraavaan pisteeseen ja päivitetään lokaatio
-                print('')
+                if destination == '':
+                    print("Okei, takaisin sitten!")
+                    lenna = False
+                    break # Rohan
                 destination = str.upper(destination)
                 for option in player_flight_options:
                     if option[1] == destination:
