@@ -348,4 +348,4 @@ elif current_airport == goal_airport and npc_current_airport != goal_airport:
     print('Voitit Möttösen onnea!')
 elif current_airport != goal_airport and npc_current_airport == goal_airport:
     print('hävisit yksinkertaiselle tietokone ohjelmalle häpeä!')
-#KKSKSKSK #Hello
+#KKSKSKSK #Hello!
