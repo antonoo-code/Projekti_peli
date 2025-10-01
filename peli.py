@@ -31,7 +31,7 @@ connection = mysql.connector.connect(
 
 
 def airports(): #haetaan lentokentät mitä käytetään
-    haku = f"SELECT iso_country, ident, name, type, latitude_deg, longitude_deg FROM airport WHERE continent = 'EU' AND iso_country NOT IN ('ES', 'PT', 'RU', 'ISL') AND type = 'large_airport' limit {GAME_AIRPORT_LIMIT};"
+    haku = f"SELECT iso_country, ident, name, type, latitude_deg, longitude_deg FROM airport WHERE continent = 'EU' AND iso_country NOT IN ('ES', 'PT', 'RU', 'ISL', 'IS') AND type = 'large_airport' limit {GAME_AIRPORT_LIMIT};"
     sql = (haku)
     """Hakee tietokannasta haltuut lentokentät ja niistä kaikki oleelliset tiedot."""
     cursor = connection.cursor(dictionary = True)
