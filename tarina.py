@@ -6,9 +6,7 @@ Tavoitteesi on voittaa mahdollisimman lyhyessä ajassa. Kisa ei ole kuitenkaan y
 
 Islannin, Espanjan ja Portugalin verisen sodan syystä niiden maiden lentokentät eivät ole käytettävissä.
 
-Lataa lentokone tai heitä noppaa saadaksesi yllätyksiä lentokentillä 
-
-Oletko sinä valmis haastamaan Möttösen?'''
+Lataa lentokone tai heitä noppaa saadaksesi yllätyksiä lentokentillä. '''
 
 wrapper = textwrap.TextWrapper(width=60, break_long_words=False, replace_whitespace=False)
 

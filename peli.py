@@ -186,6 +186,8 @@ storyDialog = input("Haluatko kuulla tarinan kisasta? (joo/ei): ")
 if storyDialog == "joo":
     for line in tarina.story():
         print(line)
+
+
 #vaikeustason päättäminen
 difficulty_running = True
 while difficulty_running:
@@ -209,8 +211,15 @@ while difficulty_running:
     else:
         print('Kirjoitit komennon väärin!!')
 
-print(f'Määränpääsi {end_airport['name']}, {BLUE}{goal_airport}{RESET} ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä')
-game_running = True
+gamestart = input("Oletko VARMASTI valmis haastamaan Möttösen (joo/ei): ")
+if gamestart == "joo":
+    game_running = True
+elif gamestart == "ei":
+    print("Hävisit jo nyt??")
+    game_running = False
+if game_running:
+    print(f'Määränpääsi {end_airport['name']}, {BLUE}{goal_airport}{RESET} ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä')
+
 while game_running:
     player_turns += 1
     if npc_current_airport != goal_airport:
