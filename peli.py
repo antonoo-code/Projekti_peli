@@ -114,13 +114,13 @@ def get_airport_name(icao): #Anton
 
 def get_list_function(x):   
     """Syötetään x paikalle nopan saatu silmäluku ja funktio kertoo mikä tapahtuuma siitä tulee."""
-    penalties = ["Salamanisku", "Passi", "President", "Fatigue", "Raffle"]
+    penalties = ["Salamanisku", "Passi", "President", "Fatigue", "Raffle", "Kakka"]
     funktion = penalties[x]
     return funktion
 
 def throw_dice(): #noppa
     """heittää noppaa 1-6."""
-    throw_dice = random.randint(0, 4)
+    throw_dice = random.randint(0, 5)
     return throw_dice
 
 
@@ -236,6 +236,9 @@ while game_running:
             elif tulos == "Fatigue":
                 print(f"{RED}Olet väsynyt, nukut pommiin ja rangesi tippui nollaan.\n{RESET}")
                 player_range = 0
+            elif tulos == "Kakka":
+                print(f"{RED}Oh no! Kakkasit housuun!!!\n{RESET}")
+                print(f"{YELLOW} Möttönen: Suako vastaan kilpailen XD \n{RESET}")
             
             
             do_run = False
