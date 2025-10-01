@@ -265,7 +265,7 @@ while game_running:
             print('')
         do = str.lower(do)
         if do == 'lataa':
-            print('latasit akun täyteen')
+            print(f'{GREEN}Latasit akun täyteen range on: {MAX_PLAYER_RANGE}kilometriä.{RESET}')
             player_range = MAX_PLAYER_RANGE
             do_run = False
         elif do == 'heita':
