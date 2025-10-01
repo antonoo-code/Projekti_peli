@@ -2,7 +2,7 @@ from geopy import distance
 import mysql.connector
 import random
 
-import story
+import tarina
 
 NPC_NUBER_OF_OPTIONS = 6
 GAME_AIRPORT_LIMIT = 100
@@ -184,7 +184,7 @@ npc_range_1 = NPC_RANGE
 #vaikeustason päättäminen
 storyDialog = input("Haluatko kuulla tarinan kisasta? (joo/ei): ")
 if storyDialog == "joo":
-    for line in story.story():
+    for line in tarina.story():
         print(line)
 difficulty_running = True
 while difficulty_running:
