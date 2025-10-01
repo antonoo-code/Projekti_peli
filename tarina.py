@@ -1,6 +1,8 @@
 import textwrap
+GOLD = "\033[38;5;220m"
+ITALIC = "\033[3m"
 
-story = '''Olet intensiivisessä lentokisassa Möttöstä vastaan. 
+story = f'''{GOLD}{ITALIC}Olet intensiivisessä lentokisassa Möttöstä vastaan. 
 
 Tavoitteesi on päästä maaliin ennen Möttöstä. Kisa ei ole kuitenkaan yksinkertainen, 
 
