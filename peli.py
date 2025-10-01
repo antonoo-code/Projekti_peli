@@ -272,9 +272,9 @@ while game_running:
                 MAX_PLAYER_RANGE = MAX_PLAYER_RANGE -200
                 player_range = MAX_PLAYER_RANGE
             elif tulos == "President":
-                print(f"{GREEN}Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle uuden lentokoneen!\n{RESET}")
+                print(f"{GREEN}Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle tuliterän lentokoneen!\n{RESET}")
+                MAX_PLAYER_RANGE = 700
                 player_range = MAX_PLAYER_RANGE
-                MAX_PLAYER_RANGE = 600
             elif tulos == "Salamanisku":
                 print(f"{GREEN}Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!\n{RESET}")
                 player_range = MAX_PLAYER_RANGE + 200
