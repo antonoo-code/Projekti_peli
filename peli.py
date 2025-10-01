@@ -178,6 +178,30 @@ player_turns = 0
 npc_turns = 0
 player_range = MAX_PLAYER_RANGE
 npc_range_1 = NPC_RANGE
+
+#vaikeustason päättäminen
+difficulty_running = True
+while difficulty_running:
+    difficulty = input('Millä vaikeustasolla haluat pelata? (helppo) (keski) (vaikea): ')
+    print('')
+    difficulty = str.lower(difficulty)
+    if difficulty == 'helppo':
+        print('Valitsit helpon vaikeustason!')
+        print(f'{YELLOW}Viesti möttöseltä: NÖSSÖ{RESET}\n')
+        NPC_RANGE = 400
+        difficulty_running = False
+    elif difficulty == 'keski':
+        print('Valitsit keskivaikean vaikeustason!\n')
+        NPC_RANGE = 600
+        difficulty_running = False
+    elif difficulty == 'vaikea':
+        print('Valitsit vaikean vaikeustason!\n')
+        print(f'{YELLOW}Viesti möttöseltä: Oho äijä uskaltaa pelata!{RESET}')
+        NPC_RANGE = 800
+        difficulty_running = False
+    else:
+        print('kirjoitit komennon väärin')
+
 print(f'Määränpääsi {end_airport['name']}, {BLUE}{goal_airport}{RESET} ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä')
 game_running = True
 while game_running:
