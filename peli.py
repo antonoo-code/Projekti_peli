@@ -6,7 +6,7 @@ import tarina
 
 NPC_NUBER_OF_OPTIONS = 6
 GAME_AIRPORT_LIMIT = 100
-NPC_RANGE = 500
+NPC_RANGE = 600
 MAX_PLAYER_RANGE = 600
 NPC_SUPERCHARGE_AMOUNT = 300
 PLAYER_SUPERCHARGE_AMOUNT = 150
@@ -195,16 +195,16 @@ while difficulty_running:
     if difficulty == 'helppo':
         print('Valitsit helpon vaikeustason!\n')
         print(f'{YELLOW}Viesti möttöseltä: NÖSSÖ{RESET}')
-        NPC_RANGE = 400
+        NPC_RANGE = NPC_RANGE - 200
         difficulty_running = False
     elif difficulty == 'keski':
         print('Valitsit keskivaikean vaikeustason!\n')
-        NPC_RANGE = 600
+        NPC_RANGE = NPC_RANGE
         difficulty_running = False
     elif difficulty == 'vaikea':
         print('Valitsit vaikean vaikeustason!\n')
         print(f'{YELLOW}Viesti möttöseltä: Oho äijä uskaltaa pelata!{RESET}')
-        NPC_RANGE = 800
+        NPC_RANGE = NPC_RANGE + 600
         difficulty_running = False
     else:
         print('Kirjoitit komennon väärin!!')
