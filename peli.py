@@ -182,7 +182,7 @@ player_range = MAX_PLAYER_RANGE
 npc_range_1 = NPC_RANGE
 
 # Pelin tarina
-storyDialog = input("Haluatko kuulla tarinan kisasta? (joo/ei): ")
+storyDialog = input(f"Haluatko kuulla tarinan kisasta? ({BLUE}joo{RESET}/{BLUE}ei{RESET}): ")
 if storyDialog == "joo":
     for line in tarina.story():
         print(line)
@@ -191,7 +191,7 @@ if storyDialog == "joo":
 #vaikeustason päättäminen
 difficulty_running = True
 while difficulty_running:
-    difficulty = input('Millä vaikeustasolla haluat pelata? (helppo) (keski) (vaikea): ')
+    difficulty = input(f'Millä vaikeustasolla haluat pelata? ({BLUE}helppo{RESET}) ({BLUE}keski{RESET}) ({BLUE}vaikea{RESET}): ')
     print('')
     difficulty = str.lower(difficulty)
     if difficulty == 'helppo':
@@ -211,7 +211,8 @@ while difficulty_running:
     else:
         print('Kirjoitit komennon väärin!!')
 
-gamestart = input("Oletko VARMASTI valmis haastamaan Möttösen (joo/ei): ")
+gamestart = input(f"Oletko VARMASTI valmis haastamaan Möttösen ({BLUE}joo{RESET}/{BLUE}ei{RESET}): ")
+print('')
 if gamestart == "joo":
     game_running = True
 elif gamestart == "ei":
@@ -224,7 +225,6 @@ while game_running:
     player_turns += 1
     if npc_current_airport != goal_airport:
         npc_turns += 1  # Rohan
-    #todo lisätään vuoroja vaan siihen asti että npc maalissa
     airport = airport_data(current_airport)
 
 
