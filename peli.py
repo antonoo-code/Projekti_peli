@@ -218,6 +218,8 @@ if gamestart == "joo":
 elif gamestart == "ei":
     print("Hävisit jo nyt??")
     game_running = False
+else:
+    game_running = True
 if game_running:
     print(f'Määränpääsi {end_airport['name']}, {BLUE}{goal_airport}{RESET} ja etäisyys sinne on {calculate_distance(start_airport, goal_airport):.0f} kilometriä')
 
