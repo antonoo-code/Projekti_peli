@@ -192,7 +192,7 @@ while game_running:
     do_run = True
     while do_run:
         if current_airport in NPC_visited_ports:
-            print(f'{RED} Möttönen havaitsi jonkun romulentokoneen, seuraavan häntä. {RESET}')
+            print(f'{RED}Möttönen havaitsi jonkun romulentokoneen, seuraavan häntä. {RESET}')
             print(f' {YELLOW}Möttönen lähetti viestin: yritäppäs nyt seurata XD{RESET}')
             print(f'{GREEN}Sinun sijaintisi on:{RESET} {get_airport_name(current_airport)} matkaa maaliin on: {calculate_distance(current_airport, goal_airport):.0f} kilometriä, sekä sinulla on rangea jäljellä {player_range:.0f} kilometriä.') #Anton
         else:
