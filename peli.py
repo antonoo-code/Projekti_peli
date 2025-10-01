@@ -221,19 +221,20 @@ while game_running:
             tulos = what_happens_options
             """Kertoo mitä millakin nopan silmäluuvulla tapahtuu."""
             if tulos == "Raffle":
-                print("Voitit lentokentän pika-arvonnan ja saat uuden lentokoneen käyttöösi, voit jatkaa lentämistä heti.")
+                print(f"{YELLOW}Voitit lentokentän pika-arvonnan ja saat käytetyn lentokoneen käyttöösi, voit jatkaa lentämistä heti.\n{RESET}")
+                MAX_PLAYER_RANGE = MAX_PLAYER_RANGE -200
                 player_range = MAX_PLAYER_RANGE
             elif tulos == "President":
-                print("Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle uuden lentokoneen!")
+                print(f"{GREEN}Tasavallan presidentti on huomioinut teidän kilpailun ja myönsi sinulle uuden lentokoneen!\n{RESET}")
                 player_range = MAX_PLAYER_RANGE
             elif tulos == "Salamanisku":
-                print("Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!")
+                print(f"{GREEN}Salama iski koneen akkuun, sait akun täyteen ja 200km ylimääräistä lentoa!\n{RESET}")
                 player_range = MAX_PLAYER_RANGE + 200
             elif tulos == "Passi":
-                print("Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan.")
+                print(f"{RED}Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan.\n{RESET}")
                 current_airport = start_airport
             elif tulos == "Fatigue":
-                print("Olet väsynyt, nukut pommiin ja rangesi tippui nollaan.")
+                print(f"{RED}Olet väsynyt, nukut pommiin ja rangesi tippui nollaan.\n{RESET}")
                 player_range = 0
             
             
