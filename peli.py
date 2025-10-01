@@ -227,7 +227,7 @@ while game_running:
                         f'{YELLOW}Sait Möttöseltä postia: Hei kaveri tarvitsetko kartan?{RESET}',
                         f'{YELLOW}Möttönen soitti ja haukkui sinua: Oho, näyttää siltä että jäit jumiin nössö!{RESET}',
                         f'{YELLOW}Möttönen soitti ja solvasi sinua: Kaveri onko kaikki hyvin?, olet hidas kuin etana{RESET}',
-                        f'{YELLOW}Möttönen lähetti tekstarin: Kaveri on huitsin nevadassa']
+                        f'{YELLOW}Möttönen lähetti tekstarin: Kaveri on huitsin nevadassa{RESET}']
             print(random.choice(messages))
         player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
         if player_flight_options == []:
