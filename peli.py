@@ -181,7 +181,7 @@ npc_turns = 0
 player_range = MAX_PLAYER_RANGE
 npc_range_1 = NPC_RANGE
 
-
+# Pelin tarina
 storyDialog = input("Haluatko kuulla tarinan kisasta? (joo/ei): ")
 if storyDialog == "joo":
     for line in tarina.story():
