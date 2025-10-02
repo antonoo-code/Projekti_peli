@@ -191,7 +191,7 @@ if storyDialog == "joo":
 #vaikeustason päättäminen
 difficulty_running = True
 while difficulty_running:
-    difficulty = input(f'Millä vaikeustasolla haluat pelata? ({BLUE}helppo{RESET}) ({BLUE}keski{RESET}) ({BLUE}vaikea{RESET}): ')
+    difficulty = input(f'Millä vaikeustasolla haluat pelata? ({BLUE}helppo{RESET}) ({BLUE}keski{RESET}) ({BLUE}vaikea{RESET}), ({RED}MAHDOTON{RESET}): ')
     print('')
     difficulty = str.lower(difficulty)
     if difficulty == 'helppo':
@@ -207,6 +207,11 @@ while difficulty_running:
         print('Valitsit vaikean vaikeustason!\n')
         print(f'{YELLOW}Viesti möttöseltä: Oho äijä uskaltaa pelata!{RESET}')
         NPC_RANGE = NPC_RANGE + 600
+        difficulty_running = False
+    elif difficulty == 'mahdoton':
+        print('Valitsit mahdottoman vaikeustason!\n')
+        print(f'{YELLOW}Viesti möttöseltä: NT CHATTII LOL!{RESET}')
+        NPC_RANGE = NPC_RANGE + 2000
         difficulty_running = False
     else:
         print('Kirjoitit komennon väärin!!')
@@ -260,7 +265,7 @@ while game_running:
             print('')
         do = str.lower(do)
         if do == 'lataa':
-            print('latasit akun täyteen')
+            print(f'{GREEN}Latasit akun täyteen range on: {MAX_PLAYER_RANGE} kilometriä.{RESET}')
             player_range = MAX_PLAYER_RANGE
             do_run = False
         elif do == 'heita':
@@ -268,7 +273,7 @@ while game_running:
             tulos = what_happens_options
             """Kertoo mitä millakin nopan silmäluuvulla tapahtuu."""
             if tulos == "Raffle":
-                print(f"{YELLOW}Voitit lentokentän pika-arvonnan XD, saat huonomman koneen käyttöösi.\n{RESET}")
+                print(f"{YELLOW}Hävisit lentokoneesi pokerissa, onneksi löysit paikkaliselta kirppikseltä käytetyn lentokoneen\n{RESET}")
                 MAX_PLAYER_RANGE = MAX_PLAYER_RANGE -200
                 player_range = MAX_PLAYER_RANGE
             elif tulos == "President":
@@ -281,6 +286,7 @@ while game_running:
             elif tulos == "Passi":
                 print(f"{RED}Jäit tullissa kiinni vanhasta passista, sinun on palattava takaisin lähtömaahan.\n{RESET}")
                 current_airport = start_airport
+                update_location(current_airport, player_range)
             elif tulos == "Fatigue":
                 print(f"{RED}Olet väsynyt, nukut pommiin ja rangesi tippui nollaan.\n{RESET}")
                 player_range = 0
@@ -346,6 +352,10 @@ if current_airport == goal_airport and npc_current_airport == goal_airport:
     print('Voi hemmetti tuli tasapeli!')
 elif current_airport == goal_airport and npc_current_airport != goal_airport:
     print('Voitit Möttösen onnea!')
+elif current_airport != goal_airport and npc_current_airport == goal_airport and difficulty == 'mahdoton':
+    print('Hävisit pelin XD')
+    print(f'{YELLOW}Möttönen lähetti viestin: Siin tai lukee mahdoton XD{RESET}')
 elif current_airport != goal_airport and npc_current_airport == goal_airport:
-    print('hävisit yksinkertaiselle tietokone ohjelmalle häpeä!')
-#KKSKSKSK #Hello!
+    print('Hävisit yksinkertaiselle tietokone ohjelmalle häpeä!')
+    print(f'{YELLOW}Möttönen lähetti viestin: Ompa vaikee pewi XD{RESET}')
+#KKSKSKSK #Hello
