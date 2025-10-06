@@ -12,7 +12,7 @@ NPC_SUPERCHARGE_AMOUNT = 300
 PLAYER_SUPERCHARGE_AMOUNT = 150
 NPC_visited_ports = set()
 
-#Terminaalin värjäys
+#Terminaalin värjäys.
 
 RESET = "\033[0m"
 RED = "\033[31m"
@@ -354,7 +354,7 @@ elif current_airport == goal_airport and npc_current_airport != goal_airport:
     print('Voitit Möttösen onnea!')
 elif current_airport != goal_airport and npc_current_airport == goal_airport and difficulty == 'mahdoton':
     print('Hävisit pelin XD')
-    print(f'{YELLOW}Möttönen lähetti viestin: Siin tai lukee mahdoton XD{RESET}')
+    print(f'{YELLOW}Möttönen lähetti viestin: Siin tais lukee mahdoton XD{RESET}')
 elif current_airport != goal_airport and npc_current_airport == goal_airport:
     print('Hävisit yksinkertaiselle tietokone ohjelmalle häpeä!')
     print(f'{YELLOW}Möttönen lähetti viestin: Ompa vaikee pewi XD{RESET}')
