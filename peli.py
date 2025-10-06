@@ -331,7 +331,7 @@ while game_running:
     
     
     npc_destination = main_npc_flight_fuunction(npc_current_airport,all_airports, npc_range_1, goal_airport)
-    print(f'Debug{npc_destination}')
+    
     if npc_destination == None:
         npc_range_1 = npc_range_1 + NPC_SUPERCHARGE_AMOUNT
         print(f'{YELLOW}Möttönen alkoi superchargeamaan lentokonettaan XD{RESET} ')
