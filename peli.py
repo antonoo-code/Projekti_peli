@@ -240,7 +240,7 @@ while game_running:
     do_run = True
     while do_run:
         if player_is_following == False and current_airport in NPC_visited_ports:
-            print(f'{RED}Möttönen havaitsi jonkun romulentokoneen, seuraavan häntä. {RESET}')
+            print(f'{RED}Möttönen epäilee jonkun romulentokoneen, seuraavan häntä. {RESET}')
             print(f' {YELLOW}Möttönen lähetti viestin: yritäppäs nyt seurata XD{RESET}')
             player_is_following = True
         
@@ -260,9 +260,12 @@ while game_running:
         player_flight_options = player_airport_range_calc(current_airport, all_airports, player_range)
         if player_flight_options == []:
             print('Sinulla ei ole rangea lentää minnekkään.')
-            do = input(f'Haluatko ladata akun täyteen? ({BLUE}Lataa{RESET}), heittää noppaa? ({BLUE}Heita{RESET}): ')
+            if player_range >= MAX_PLAYER_RANGE:
+                do = input(f'Haluatko superghargeta akkusi? ({BLUE}Super{RESET}), heittää noppaa? ({BLUE}Heita{RESET}) tai lentää? ({BLUE}Lenna{RESET}): ')
+            else:
+                do = input(f'Haluatko ladata akun täyteen? ({BLUE}Lataa{RESET}), heittää noppaa? ({BLUE}Heita{RESET}): ')
             print('')
-        elif player_range == MAX_PLAYER_RANGE:
+        elif player_range >= MAX_PLAYER_RANGE:
             do = input(f'Haluatko superghargeta akkusi? ({BLUE}Super{RESET}), heittää noppaa? ({BLUE}Heita{RESET}) tai lentää? ({BLUE}Lenna{RESET}): ')
             print('')
         else:
@@ -341,12 +344,14 @@ while game_running:
         npc_range_1 = npc_range_1 + NPC_SUPERCHARGE_AMOUNT
         print(f'{YELLOW}Möttönen alkoi lataamaan lentokonettaan XD{RESET} ')
         do_run = False
-    elif npc_range_1 > NPC_RANGE/2 : #jos npc range yli 500 npc lentää seuraavaavalle kentälle. #Anton
+    elif npc_range_1 >= NPC_RANGE/2 : #jos npc range yli 500 npc lentää seuraavaavalle kentälle. #Anton
         npc_selected_distance = calculate_distance(npc_current_airport, npc_destination)
         npc_range_1  -= npc_selected_distance
         update_location(npc_destination, npc_range_1)
         npc_current_airport = npc_destination
         do_run = False
+    else:
+        npc_range_1 = NPC_RANGE
 
     
     
