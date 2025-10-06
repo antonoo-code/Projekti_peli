@@ -172,6 +172,7 @@ start_num = random.randint(0,len(all_airports)-1)
 start_airport = all_airports[start_num]['ident']
 goal_airport =  get_goal_airports(start_airport, all_airports)
 
+player_is_following = False
 
 current_airport = start_airport
 npc_current_airport = start_airport
@@ -238,13 +239,17 @@ while game_running:
     # kysytään haluuako ladata, heittää noppaa tai lentää laitoin while nii ei tuu väärää kometoa
     do_run = True
     while do_run:
-        if current_airport in NPC_visited_ports:
+        if player_is_following == False and current_airport in NPC_visited_ports:
             print(f'{RED}Möttönen havaitsi jonkun romulentokoneen, seuraavan häntä. {RESET}')
             print(f' {YELLOW}Möttönen lähetti viestin: yritäppäs nyt seurata XD{RESET}')
-            print(f'{GREEN}Sinun sijaintisi on:{RESET} {get_airport_name(current_airport)} matkaa maaliin on: {calculate_distance(current_airport, goal_airport):.0f} kilometriä, sekä sinulla on rangea jäljellä {player_range:.0f} kilometriä.') #Anton
-        else:
-            print(f'{GREEN}Sinun sijaintisi on: {RESET} {get_airport_name(current_airport)} matkaa maaliin on: {calculate_distance(current_airport, goal_airport):.0f} kilometriä, sekä sinulla on rangea jäljellä {player_range:.0f} kilometriä.')
+            player_is_following = True
+        
+        print(f'{GREEN}Sinun sijaintisi on:{RESET} {get_airport_name(current_airport)} matkaa maaliin on: {calculate_distance(current_airport, goal_airport):.0f} kilometriä, sekä sinulla on rangea jäljellä {player_range:.0f} kilometriä.') #Anton
+        if player_is_following == False or random.randint(1,3) == 1:
             print(f'{YELLOW}Möttösen sijainti on:{RESET} {get_airport_name(npc_current_airport)} ja matkaa maaliin on: {calculate_distance(npc_current_airport, goal_airport):.0f} kilometriä.') #Anton
+
+        
+        
         if calculate_distance(npc_current_airport, goal_airport) + 200 < calculate_distance(current_airport, goal_airport):
             messages = [f'{YELLOW}Möttönen lähetti sinulle viestin: Missä kaveri hinaa XDD{RESET}',
                         f'{YELLOW}Sait Möttöseltä postia: Hei kaveri tarvitsetko kartan?{RESET}',
@@ -334,7 +339,7 @@ while game_running:
     
     if npc_destination == None:
         npc_range_1 = npc_range_1 + NPC_SUPERCHARGE_AMOUNT
-        print(f'{YELLOW}Möttönen alkoi superchargeamaan lentokonettaan XD{RESET} ')
+        print(f'{YELLOW}Möttönen alkoi lataamaan lentokonettaan XD{RESET} ')
         do_run = False
     elif npc_range_1 > NPC_RANGE/2 : #jos npc range yli 500 npc lentää seuraavaavalle kentälle. #Anton
         npc_selected_distance = calculate_distance(npc_current_airport, npc_destination)
@@ -342,9 +347,7 @@ while game_running:
         update_location(npc_destination, npc_range_1)
         npc_current_airport = npc_destination
         do_run = False
-    else: # jos range alle 500 npc valitsee latauksen.
-        npc_range_1 = NPC_RANGE
-        do_run = False #Anton
+
     
     
     if current_airport == goal_airport or npc_current_airport == goal_airport:
