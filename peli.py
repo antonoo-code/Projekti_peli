@@ -12,7 +12,7 @@ NPC_SUPERCHARGE_AMOUNT = 300
 PLAYER_SUPERCHARGE_AMOUNT = 150
 NPC_visited_ports = set()
 
-#Terminaalin värjäys
+#Terminaalin värjäys.
 
 RESET = "\033[0m"
 RED = "\033[31m"
