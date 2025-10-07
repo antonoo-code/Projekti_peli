@@ -103,7 +103,7 @@ def npc_airport_range_calc(npc_icao, airport_list, npc_range): #Anton
         if range <= npc_range and range != 0:
             in_range.append([airport['ident'], int(range)])
 
-        return in_range
+    return in_range
 
 def get_airport_name(icao): #Anton
     """Etsii halutun kentän nimen käyttäen icaota."""
@@ -342,7 +342,6 @@ while game_running:
     
     
     npc_destination = main_npc_flight_fuunction(npc_current_airport,all_airports, npc_range_1, goal_airport)
-    
     if npc_destination == None:
         npc_range_1 = npc_range_1 + NPC_SUPERCHARGE_AMOUNT
         print(f'{YELLOW}Möttönen alkoi lataamaan lentokonettaan XD{RESET} ')
