@@ -1,0 +1,83 @@
+/* Nicke */
+
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+body {
+    margin: 0;
+}
+
+header {
+    background-color: lightblue;
+    text-align: center;
+}
+nav {
+    background-color: burlywood;
+}
+
+ul {
+    display: flex;
+    list-style-type: none;
+    justify-content: space-evenly;
+    background-color: lightblue;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: gray;
+    display: flex;
+}
+
+nav li {
+    margin: 0;
+}
+
+nav a {
+    display: block;
+    padding: 14px 20px;
+    color: white;
+    text-decoration: none;
+}
+
+li a {
+    background-color: darkgray;
+    color: floralwhite;
+    width: 10rem;
+    height: 3rem;
+    display: block;
+    text-align: center;
+    line-height: 3rem;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: black;
+}
+
+main {
+    background-color: #9c9cac;
+    padding: 1rem;
+    display: flex;
+}
+
+section {
+}
+
+li b {
+    width: 10rem;
+    height: 2rem;
+    display: flex;
+}
+
+figure {
+    float: middle;
+    margin: 0;
+    border: 1px black solid;
+    border-radius: 8px;
+}
